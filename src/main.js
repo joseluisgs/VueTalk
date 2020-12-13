@@ -7,6 +7,11 @@ import router from './router';
 import store from './store';
 import App from './App.vue';
 
+// Firebase
+import Firebase from './services/FirebaseService';
+
+console.log(`⚑ Firebase -> ${Firebase.defaultProject.name} ✓`);
+
 // Importamos nuestros estilos globales de bulma
 require('./assets/css/main.scss');
 
