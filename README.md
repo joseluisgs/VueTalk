@@ -12,7 +12,7 @@ Aplicación de chats para hablar con tus contactos usando Vue.js, Firebase y Bul
 
 ## Acerca de
 
-Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats.
+Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en tiempo real con intercambio de ficheros en distintas salas.
 
 Algunos aspectos reseñables:
 
@@ -21,8 +21,6 @@ Algunos aspectos reseñables:
 - Editar las salas, cambiar su portada y enviar archivos multimedia. Cloud Storage y Cloud Functions.
 - Elementos de Vue, VueCLI, Vuex, Vue Router y demás.
 - Despliegue en Firebase Hosting, Netlify y/o Heroku (Estos dos son opcionales).
-
-
 
 ## Project setup
 
