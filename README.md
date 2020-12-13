@@ -1,6 +1,6 @@
 # VueTalk
 
-Aplicación de chats para hablar con tus contactos usando Vue.js y Firebase y Bulma.
+Aplicación de chats para hablar con tus contactos usando Vue.js, Firebase y Bulma.
 
 [![Vue Ready](https://img.shields.io/badge/Vue.js-%20Ready-%2342b983)](https://es.vuejs.org/)
 [![Firebase](https://img.shields.io/badge/Firebase-Ready-orange)](https://instavue-fire.web.app)
@@ -12,7 +12,7 @@ Aplicación de chats para hablar con tus contactos usando Vue.js y Firebase y Bu
 
 ## Acerca de
 
-Proyecto realizado con Vue.js, con Bulma/Buefy y Firebase. Apliación de chats.
+Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats.
 
 Algunos aspectos reseñables:
 
