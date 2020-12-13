@@ -8,7 +8,7 @@ import store from './store';
 import App from './App.vue';
 
 // Firebase
-import Firebase from './services/FirebaseService';
+import Firebase from './services/Firebase';
 
 console.log(`⚑ Firebase -> ${Firebase.defaultProject.name} ✓`);
 

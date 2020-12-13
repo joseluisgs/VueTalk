@@ -21,8 +21,8 @@ const db = firebase.firestore(); // Base de datos en tiempo real
 const auth = firebase.auth(); // Autenticación
 const storage = firebase.storage(); // Almacenamiento
 
-// Autenticación de Google, poner uno por método de identificación. Se deb eactivar en la consola de Firebase
-// const providerGoogle = new firebase.auth.GoogleAuthProvider();
+// Métodos de autentificación. Autenticación de Google, poner uno por método de identificación. Se debe eactivar en la consola de Firebase
+const providerGoogle = new firebase.auth.GoogleAuthProvider();
 
 // usuario actual
 const user = auth.currentUser;
@@ -41,9 +41,12 @@ export default {
   db,
   auth,
   storage,
+  // Usuario actual
   user,
   defaultProject,
-  // providerGoogle,
+  // Proveedores de servicio para identificarse
+  providerGoogle,
+  // Collecciones
   // plantsCollection,
   // usersCollection,
   // likesCollection,
