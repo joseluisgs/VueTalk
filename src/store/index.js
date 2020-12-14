@@ -18,7 +18,7 @@ const store = new Vuex.Store({
   actions: {
     checkAuth() { },
   },
-  // Cargamos los módulos
+  // Cargamos los módulos los cuales forman nuestro estado central
   modules: {
     messages,
     rooms,

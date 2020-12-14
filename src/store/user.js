@@ -1,3 +1,4 @@
+// Modelos de usuarios
 const state = {
   user: null,
 };

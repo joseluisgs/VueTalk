@@ -1,3 +1,4 @@
+// Utilidades
 const actions = {};
 
 export default {

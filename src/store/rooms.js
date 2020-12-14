@@ -1,3 +1,4 @@
+// Modelos de salas
 const state = {
   room: [],
 };
