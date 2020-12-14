@@ -8,7 +8,7 @@ export default {
 
   /**
    * Devuelve el usuario activo
-   * @returns {User}
+   * @returns {User} Objeto User Google Auth
    */
   getUsuarioActivo() {
     return Auth.currentUser;
@@ -16,7 +16,7 @@ export default {
 
   /**
    * Realiza el login con Google: https://firebase.google.com/docs/auth/web/google-signin?hl=es_419
-   * @returns {User}
+   * @returns {User} Objeto User Google Auth
    */
   async loginGoogle() {
     const res = await Auth.signInWithPopup(Service.providerGoogle);

@@ -1,19 +1,13 @@
 <template>
   <section class="section">
     <div class="container">
-      <button v-if="!user"
-        @click="doLogin"
-        class="button">
-          Login with Google 🚀
+      <button v-if="!user" @click="doLogin" class="button">
+        Login with Google 🚀
       </button>
       <template v-else>
-          <h1 class="title has-text-centered">Hi {{ user.displayName }}</h1>
-          <button
-            @click="doLogout"
-            class="button">
-            Logout 🙀
-          </button>
-        </template>
+        <h1 class="title has-text-centered">Hi {{ user.displayName }}</h1>
+        <button @click="doLogout" class="button">Logout 🙀</button>
+      </template>
     </div>
   </section>
 </template>
@@ -31,7 +25,9 @@ export default {
 
   // Mi Métodos
   methods: {
-    // Loguarse siguiendo la filosofía de Google
+    /**
+     * Inicia el proceso de identificación
+     */
     async doLogin() {
       try {
         this.user = await Auth.loginGoogle();
@@ -39,7 +35,10 @@ export default {
         console.error(error.message);
       }
     },
-    // Desloguarse siguiendo la filosofía de Google
+
+    /**
+     * Inicia el proceso de desloguearse
+     */
     async doLogout() {
       try {
         await Auth.logout();
@@ -49,6 +48,5 @@ export default {
       }
     },
   },
-
 };
 </script>
