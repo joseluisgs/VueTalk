@@ -29,6 +29,7 @@
         <!-- Botones de fin -->
         <template slot="end">
             <b-navbar-item tag="div">
+              <b-navbar-item v-if="user"><i class="fas fa-user-alt"></i>  Hi!, {{user.displayName}}</b-navbar-item>
                 <div class="buttons">
                   <template v-if="user">
                     <b-button
@@ -66,8 +67,9 @@ export default {
       try {
         this.userLogout();
         this.$router.push({ name: 'Auth' });
-        console.log('Logged Out');
+        this.$toast.success('Logged Out');
       } catch (error) {
+        this.$toast.error(error.message);
         console.error(error.message);
       }
     },

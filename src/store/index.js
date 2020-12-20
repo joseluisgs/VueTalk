@@ -1,3 +1,5 @@
+/* eslint no-shadow: ["error", { "allow": ["user"] }] */
+
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -6,6 +8,7 @@ import messages from './messages';
 import rooms from './rooms';
 import user from './user';
 import utils from './utils';
+import Service from '../services/Firebase';
 
 Vue.use(Vuex);
 
@@ -16,7 +19,20 @@ const store = new Vuex.Store({
   mutations: {
   },
   actions: {
-    checkAuth() { },
+    /**
+     * Actualiza el estado si existe el token de la sesión
+     * @param {state} state
+     */
+    checkAuth({ commit }) {
+      Service.auth.onAuthStateChanged((user) => {
+        // Actualizamos el estado que está en el módulo de usuario
+        if (user) {
+          commit('user/setUser', user);
+        } else {
+          commit('user/setUser', user);
+        }
+      });
+    },
   },
   // Cargamos los módulos los cuales forman nuestro estado central
   modules: {
@@ -30,5 +46,5 @@ const store = new Vuex.Store({
 // Exportamos
 export default store;
 
-// Comprobar si está autenticado
+// Comprobar si está autenticado lo lanzamos nada más cargar el store
 store.dispatch('checkAuth');
