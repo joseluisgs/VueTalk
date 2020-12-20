@@ -10,8 +10,8 @@ export default {
    * Devuelve el usuario activo
    * @returns {user} Objeto User Google Auth
    */
-  getUsuarioActivo() {
-    return Auth.currentUser;
+  async getActiveUser() {
+    return Service.currentUser;
   },
 
   /**

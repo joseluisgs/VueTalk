@@ -30,14 +30,19 @@
         <template slot="end">
             <b-navbar-item tag="div">
                 <div class="buttons">
-                    <a class="button is-primary">
-                        <strong>Profile</strong>
-                    </a>
-                    <a
-                      @click="doLogout"
-                      class="button is-light">
-                        Log out
-                    </a>
+                  <template v-if="user">
+                    <b-button
+                      tag="router-link"
+                      :to="{ name: 'Home' }"
+                      type="is-primary">
+                      <strong>Profile</strong>
+                    </b-button>
+                    <b-button
+                      type="is-light"
+                      @click="doLogout">
+                      Logout
+                    </b-button>
+                  </template>
                 </div>
             </b-navbar-item>
         </template>
@@ -45,13 +50,32 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   name: 'NavBar',
 
+  // Mis métodos
   methods: {
+    ...mapActions('user', ['userLogout']),
+
+    /**
+     * Realiza el Log out
+     */
     doLogout() {
-      console.log('logOut');
+      try {
+        this.userLogout();
+        this.$router.push({ name: 'Auth' });
+        console.log('Logged Out');
+      } catch (error) {
+        console.error(error.message);
+      }
     },
+  },
+
+  // Mis variables o campos compuados
+  computed: {
+    ...mapState('user', ['user']),
   },
 };
 </script>
