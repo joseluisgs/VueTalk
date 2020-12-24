@@ -16,7 +16,7 @@
 import Auth from '@/services/Firebase/Auth';
 
 export default {
-  name: 'Home',
+  name: 'RoomsView',
 
   // Mi modelo de datos
   data: () => ({

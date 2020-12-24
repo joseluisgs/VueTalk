@@ -5,6 +5,7 @@
 
 import Auth from '../services/Firebase/Auth';
 import User from '../services/Firebase/User';
+import Service from '../services/Firebase/index';
 
 const state = {
   user: null,
@@ -68,6 +69,26 @@ const actions = {
   async userLogout({ commit }) {
     await Auth.logout();
     commit('setUser', null);
+  },
+
+  /**
+   * Obtiene el usuario Actual y resolvemos la promesa
+   */
+  getCurrentUser() {
+    // Lo que hacemos es detectar los cambios en tiempo real
+    return new Promise((resolve, reject) => {
+      const unsubscribe = Service.auth.onAuthStateChanged(
+        // Si tenemos usuario, resolvemos la promesa y lo retornamos
+        (user) => {
+          unsubscribe();
+          resolve(user);
+        },
+        // Rechazamos
+        () => {
+          reject();
+        },
+      );
+    });
   },
 };
 
