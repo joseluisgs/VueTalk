@@ -5,12 +5,12 @@
         <div class="column is-half is-offset-one-quarter">
 
           <!-- Loging form -->
-          <template v-if="isLogin">
+          <template v-if="action==='login'">
             <h1 class="title has-text-centered">Login</h1>
             <form @submit.prevent="doLogin">
               <b-field label="Email" position="is-left">
                  <p class="control has-icons-left has-icons-right">
-                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="usermail-input"></b-input>
+                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="login-user-mail-input"></b-input>
                   <span class="icon is-small is-left">
                     <i class="fa fa-envelope-o"></i>
                   </span>
@@ -18,7 +18,7 @@
               </b-field>
               <b-field label="Password" position="is-left">
                  <p class="control has-icons-left has-icons-right">
-                  <b-input placeholder="password" required type="password" icon="password" v-model.trim="userData.password" key="userpassword-input"></b-input>
+                  <b-input placeholder="password" required type="password" icon="password" v-model.trim="userData.password" key="login-user-password-input"></b-input>
                   <span class="icon is-small is-left">
                      <i class="fa fa-unlock"></i>
                   </span>
@@ -30,24 +30,25 @@
                     tag="input"
                     type="is-link"
                     native-type="submit"
-                    value="Login"
                     :class="{ 'is-loading': isLoading }"
-                  />
+                  >Login
+                  </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->
                 </div>
               </div>
-              <a href="#" @click="isLogin = false">Don't have an account?</a>
+              <a class="is-block" href="#" @click="action='register'">Don't have an account?</a>
+              <a class="is-block" href="#" @click="action = 'reset'">Forgot your password?</a>
             </form>
           </template>
           <!-- End Loging form -->
 
           <!-- Register form -->
-          <template v-else>
+          <template v-if="action==='register'">
             <h1 class="title has-text-centered">Register</h1>
             <form @submit.prevent="doRegister">
               <b-field label="Name" position="is-left">
                  <p class="control has-icons-left has-icons-right">
-                  <b-input placeholder="Your Name" required type="text" v-model.trim="userData.name" key="username-input"></b-input>
+                  <b-input placeholder="Your Name" required type="text" v-model.trim="userData.name" key="register-user-name-input"></b-input>
                   <span class="icon is-small is-left">
                     <i class="fa fa-user"></i>
                   </span>
@@ -55,7 +56,7 @@
               </b-field>
               <b-field label="Email" position="is-left">
                  <p class="control has-icons-left has-icons-right">
-                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="usermail-input"></b-input>
+                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="register-user-mail-input"></b-input>
                   <span class="icon is-small is-left">
                     <i class="fa fa-envelope-o"></i>
                   </span>
@@ -63,7 +64,7 @@
               </b-field>
               <b-field label="Password" position="is-left">
                  <p class="control has-icons-left has-icons-right">
-                  <b-input placeholder="password" required type="password" icon="password" v-model.trim="userData.password" key="userpassword-input"></b-input>
+                  <b-input placeholder="password" required type="password" icon="password" v-model.trim="userData.password" key="register-user-password-input"></b-input>
                   <span class="icon is-small is-left">
                     <i class="fa fa-lock"></i>
                   </span>
@@ -75,16 +76,44 @@
                     tag="input"
                     type="is-link"
                     native-type="submit"
-                    value="Register"
                     :class="{ 'is-loading': isLoading }"
-                  />
+                  >Register
+                  </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->
                 </div>
               </div>
-              <a href="#" @click="isLogin = true">Want to login?</a>
+              <a href="#" @click="action='login'">Want to login?</a>
             </form>
           </template>
           <!-- End Loging form -->
+
+          <!-- Password reset email -->
+          <template v-if="action === 'reset'">
+            <h1 class="title has-text-centered">Reset</h1>
+            <form @submit.prevent="doReset">
+              <b-field label="Email" position="is-left">
+                 <p class="control has-icons-left has-icons-right">
+                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="reset-user-mail-input"></b-input>
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-envelope-o"></i>
+                  </span>
+                </p>
+              </b-field>
+             <div class="field is-grouped has-text-righ">
+                <div class="buttons">
+                  <b-button
+                    tag="input"
+                    type="is-link"
+                    native-type="submit"
+                    :class="{ 'is-loading': isLoading }"
+                  >Reset
+                </b-button>
+                </div>
+              </div>
+              <a href="#" @click="action = 'register'">Don't have an account?</a>
+            </form>
+          </template>
+          <!-- End of Password reset email -->
         </div>
       </div>
     </div>
@@ -98,7 +127,7 @@ export default {
   name: 'AuthView',
   // Mi modelo de datos
   data: () => ({
-    isLogin: true,
+    action: 'login',
     isLoading: false,
     userData: {
       name: '',
@@ -108,7 +137,7 @@ export default {
   }),
   methods: {
     // Sobre el estado usaremos
-    ...mapActions('user', ['userLogin', 'userRegister']),
+    ...mapActions('user', ['userLogin', 'userRegister', 'resetPassword']),
 
     /**
      * Realiza el login
@@ -145,6 +174,24 @@ export default {
         this.$toast.success('Account Created');
         this.resetData();
         this.redirect();
+      } catch (error) {
+        this.$toast.error(error.message);
+        console.error(error.message);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    /**
+     * Realiza el resteo de password
+     */
+    async doReset() {
+      this.isLoading = true;
+      try {
+        console.log(this.userData.email);
+        await this.resetPassword(this.userData.email);
+        this.$toast.success(`Please check ${this.userData.email} for further instructions`);
+        this.resetData();
       } catch (error) {
         this.$toast.error(error.message);
         console.error(error.message);

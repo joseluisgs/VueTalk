@@ -116,6 +116,14 @@ const actions = {
       );
     });
   },
+
+  /**
+   * Actualiza el password dado un mail
+   * @param {string} email
+   */
+  async resetPassword(context, email) {
+    return Auth.reset(email);
+  },
 };
 
 export default {
