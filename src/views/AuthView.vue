@@ -16,7 +16,7 @@
                   </span>
                 </p>
               </b-field>
-              <b-field label="Password" position="is-left" v-model="userData.password">
+              <b-field label="Password" position="is-left">
                  <p class="control has-icons-left has-icons-right">
                   <b-input placeholder="password" required type="password" icon="password" v-model.trim="userData.password" key="userpassword-input"></b-input>
                   <span class="icon is-small is-left">
@@ -53,7 +53,7 @@
                   </span>
                 </p>
               </b-field>
-              <b-field label="Email" position="is-left" v-model="userData.email">
+              <b-field label="Email" position="is-left">
                  <p class="control has-icons-left has-icons-right">
                   <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="usermail-input"></b-input>
                   <span class="icon is-small is-left">
@@ -61,7 +61,7 @@
                   </span>
                 </p>
               </b-field>
-              <b-field label="Password" position="is-left" v-model="userData.password">
+              <b-field label="Password" position="is-left">
                  <p class="control has-icons-left has-icons-right">
                   <b-input placeholder="password" required type="password" icon="password" v-model.trim="userData.password" key="userpassword-input"></b-input>
                   <span class="icon is-small is-left">

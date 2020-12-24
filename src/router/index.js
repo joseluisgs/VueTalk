@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import RoomsView from '../views/RoomsView.vue';
-import AuthView from '../views/AuthView.vue';
 // Importamos Vuex
 import store from '../store';
+// Mis vistas
+import RoomsView from '../views/RoomsView.vue';
+import AuthView from '../views/AuthView.vue';
+import UserProfileView from '../views/UserProfileView.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +23,14 @@ const routes = [
     path: '/auth',
     name: 'Auth',
     component: AuthView,
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: UserProfileView,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/about',

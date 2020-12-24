@@ -72,6 +72,32 @@ const actions = {
   },
 
   /**
+   * Actualiza el perfil del usuario
+   * @param {context} { state, commit }
+   * @param {user} { name, email, password }
+   */
+  async profileUpdate({ commit }, { name, email, password }) {
+    const user = await Auth.getActiveUser();
+    // si nos llegan los cambios
+    if (name) {
+      await User.updateProfile(user, {
+        displayName: name,
+      });
+    }
+
+    if (email) {
+      await User.updateEmail(user, email);
+    }
+
+    if (password) {
+      await User.updatePassword(user, password);
+    }
+
+    // Actualizamos los cambios en el store
+    commit('setUser', user);
+  },
+
+  /**
    * Obtiene el usuario Actual y resolvemos la promesa
    */
   getCurrentUser() {

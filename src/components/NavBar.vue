@@ -34,7 +34,7 @@
                   <template v-if="user">
                     <b-button
                       tag="router-link"
-                      :to="{ name: 'Home' }"
+                      :to="{ name: 'Profile' }"
                       type="is-primary">
                       <strong>Profile</strong>
                     </b-button>
