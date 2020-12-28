@@ -33,7 +33,7 @@ Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en ti
 Algunos aspectos reseñables:
 
 - Dispone de un sistema para autentificar y registrar los usuarios. [Firebase Auth](https://firebase.google.com/docs/auth).
-- Crear salas de conversación e interactuar con ellas y con otros usuarios, en tiempo real. Cloud Firestore.
+- Crear salas de conversación e interactuar con ellas y con otros usuarios, en tiempo real. [Cloud Firestore](https://firebase.google.com/docs/firestore?hl=es).
 - Editar las salas, cambiar su portada y enviar archivos multimedia. Cloud Storage y Cloud Functions.
 - Elementos de Vue, VueCLI, Vuex, Vue Router y demás.
 - Despliegue en Firebase Hosting, Netlify y/o Heroku (Estos dos son opcionales).
