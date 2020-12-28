@@ -1,6 +1,6 @@
 # VueTalk
 
-Aplicación de chats para hablar con tus contactos usando Vue.js y Firebase y Bulma.
+Aplicación de chats para hablar con tus contactos usando Vue.js, Firebase y Bulma.
 
 [![Vue Ready](https://img.shields.io/badge/Vue.js-%20Ready-%2342b983)](https://es.vuejs.org/)
 [![Firebase](https://img.shields.io/badge/Firebase-Ready-orange)](https://instavue-fire.web.app)
@@ -10,13 +10,29 @@ Aplicación de chats para hablar con tus contactos usando Vue.js y Firebase y Bu
 [![Licence](https://img.shields.io/github/license/joseluisgs/NodeMonRest)](https://github.com/joseluisgs/VueTalk/blob/main/LICENSE)
 ![GitHub](https://img.shields.io/github/last-commit/joseluisgs/VueTalk)
 
+
+- [VueTalk](#vuetalk)
+  - [Acerca de](#acerca-de)
+  - [Project setup](#project-setup)
+    - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
+    - [Compiles and minifies for production](#compiles-and-minifies-for-production)
+    - [Run your unit tests](#run-your-unit-tests)
+    - [Lints and fixes files](#lints-and-fixes-files)
+    - [Customize configuration](#customize-configuration)
+  - [Autor](#autor)
+  - [Licencia](#licencia)
+    - [Agradecimientos](#agradecimientos)
+
+
+
+
 ## Acerca de
 
-Proyecto realizado con Vue.js, con Bulma/Buefy y Firebase. Apliación de chats.
+Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en tiempo real con intercambio de ficheros en distintas salas.
 
 Algunos aspectos reseñables:
 
-- Dispone de un sistema para autentificar y registrar los usuarios. Firebase Auth.
+- Dispone de un sistema para autentificar y registrar los usuarios. [Firebase Auth](https://firebase.google.com/docs/auth).
 - Crear salas de conversación e interactuar con ellas y con otros usuarios, en tiempo real. Cloud Firestore.
 - Editar las salas, cambiar su portada y enviar archivos multimedia. Cloud Storage y Cloud Functions.
 - Elementos de Vue, VueCLI, Vuex, Vue Router y demás.
