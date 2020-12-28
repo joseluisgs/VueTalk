@@ -10,6 +10,22 @@ Aplicación de chats para hablar con tus contactos usando Vue.js, Firebase y Bul
 [![Licence](https://img.shields.io/github/license/joseluisgs/NodeMonRest)](https://github.com/joseluisgs/VueTalk/blob/main/LICENSE)
 ![GitHub](https://img.shields.io/github/last-commit/joseluisgs/VueTalk)
 
+
+- [VueTalk](#vuetalk)
+  - [Acerca de](#acerca-de)
+  - [Project setup](#project-setup)
+    - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
+    - [Compiles and minifies for production](#compiles-and-minifies-for-production)
+    - [Run your unit tests](#run-your-unit-tests)
+    - [Lints and fixes files](#lints-and-fixes-files)
+    - [Customize configuration](#customize-configuration)
+  - [Autor](#autor)
+  - [Licencia](#licencia)
+    - [Agradecimientos](#agradecimientos)
+
+
+
+
 ## Acerca de
 
 Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en tiempo real con intercambio de ficheros en distintas salas.
