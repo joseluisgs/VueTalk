@@ -28,8 +28,8 @@ const providerGoogle = new firebase.auth.GoogleAuthProvider();
 const user = auth.currentUser;
 
 // Colecciones de documentos a usar
-// const plantsCollection = db.collection('my-plants');
-// const usersCollection = db.collection('users');
+const usersCollection = db.collection('vuetalk-users');
+const roomsCollection = db.collection('vuetalk-rooms');
 // const likesCollection = db.collection('likes');
 
 // imprimimos el nombre del proyecto, esto espor depurar, luego quitar si se quiere
@@ -47,7 +47,7 @@ export default {
   // Proveedores de servicio para identificarse
   providerGoogle,
   // Collecciones
-  // plantsCollection,
-  // usersCollection,
+  usersCollection,
+  roomsCollection,
   // likesCollection,
 };

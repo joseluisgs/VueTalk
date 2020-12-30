@@ -1,4 +1,4 @@
-import Service from '.';
+import Service from './index';
 
 // Recurso
 const Auth = Service.auth;

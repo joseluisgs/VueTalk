@@ -2,10 +2,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // Importamos Vuex
 import store from '../store';
-// Mis vistas
-import RoomsView from '../views/RoomsView.vue';
-import AuthView from '../views/AuthView.vue';
-import UserProfileView from '../views/UserProfileView.vue';
+
+// Mis vistas, con cargas dinamicas lazy, solo las cargamos cuando accedemos a ellos
+const RoomsView = () => import('../views/RoomsView.vue');
+const AuthView = () => import('../views/AuthView.vue');
+const CreateRoomView = () => import('../views/CreateRoomView.vue');
+const UserProfileView = () => import('../views/UserProfileView.vue');
 
 Vue.use(VueRouter);
 
@@ -28,6 +30,14 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: UserProfileView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/create',
+    name: 'Create',
+    component: CreateRoomView,
     meta: {
       requiresAuth: true,
     },

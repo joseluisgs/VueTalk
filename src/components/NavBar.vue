@@ -21,7 +21,7 @@
             </b-navbar-item>
             <b-navbar-item
               tag="router-link"
-              :to="{ name: 'Home' }"
+              :to="{ name: 'Create' }"
               href="#">
                 Create Room
             </b-navbar-item>

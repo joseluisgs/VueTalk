@@ -24,7 +24,7 @@
                   </span>
                 </p>
               </b-field>
-              <div class="field is-grouped has-text-righ">
+              <div class="field is-grouped has-text-right">
                 <div class="buttons">
                   <b-button
                     tag="input"
