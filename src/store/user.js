@@ -1,11 +1,12 @@
-/**
- * Estado para Usuario
- */
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 
 import Auth from '../services/Firebase/Auth';
 import User from '../services/Firebase/User';
 import Service from '../services/Firebase/index';
+
+/**
+* Los servicios en tiempo real hay que tocarlos en el estado directamente
+*/
 
 const state = {
   user: null,
@@ -100,7 +101,7 @@ const actions = {
   /**
    * Obtiene el usuario Actual y resolvemos la promesa
    */
-  getCurrentUser() {
+  async getCurrentUser() {
     // Lo que hacemos es detectar los cambios en tiempo real
     return new Promise((resolve, reject) => {
       const unsubscribe = Service.auth.onAuthStateChanged(

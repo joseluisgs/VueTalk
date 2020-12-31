@@ -1,8 +1,16 @@
+/* eslint no-shadow: ["error", { "allow": ["state"] }] */
+
 import Rooms from '../services/Firebase/Room';
 import Service from '../services/Firebase/index';
 
-// Modelos de salas
-/* eslint no-shadow: ["error", { "allow": ["state"] }] */
+/**
+ * Estado para Salas
+ */
+
+/**
+* Los servicios en tiempo real hay que tocarlos en el estado directamente
+*/
+
 const state = {
   rooms: [],
 };

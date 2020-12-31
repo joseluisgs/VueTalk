@@ -5,11 +5,14 @@ import Vuex from 'vuex';
 
 // Vamos a crear un módulo para cada modelo
 import messages from './messages';
-// eslint-disable-next-line import/no-cycle
 import rooms from './rooms';
 import user from './user';
 import utils from './utils';
 import Service from '../services/Firebase';
+
+/**
+ * Los servicios en tiempo real hay que tocarlos en el estado directamente
+ */
 
 Vue.use(Vuex);
 
@@ -31,6 +34,7 @@ const store = new Vuex.Store({
   actions: {
     /**
      * Actualiza el estado si existe el token de la sesión
+     * Como es el tiempo real se programa aquí y no en servicios.
      * @param {state} state
      */
     checkAuth({ dispatch, commit }) {
@@ -59,5 +63,6 @@ const store = new Vuex.Store({
 // Exportamos
 export default store;
 
-// Comprobar si está autenticado lo lanzamos nada más cargar el store
+// Comprobar si está autenticado lo lanzamos nada más cargar el store y se carga antes de la instancia de Vue
+// Se queda residente en memoria por si acaso.
 store.dispatch('checkAuth');
