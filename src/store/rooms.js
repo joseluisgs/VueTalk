@@ -15,7 +15,13 @@ const state = {
   rooms: [],
 };
 
-const getters = {};
+const getters = {
+  /**
+   * Devuelve del estado la sala con el id que le indicamos
+   * @param {state} state
+   */
+  getRoom: (state) => (id) => state.rooms.find((room) => room.id === id),
+};
 
 const mutations = {
   /**
@@ -64,6 +70,25 @@ const actions = {
       commit('setLoading', false, { root: true });
       commit('setRooms', rooms);
     });
+  },
+
+  /**
+   * Obtiene una sala dado un ID
+   * @param {context} context
+   * @param {string} roomID
+   */
+  async getRoomByID(context, roomID) {
+    return Rooms.getRoom(roomID);
+  },
+
+  /**
+   * actualiza los datos de una sala
+   * @param {context} context
+   * @param {room} room data
+   */
+  async roomUpdate(context, { roomID, name, description }) {
+    console.log('Aqui');
+    return Rooms.updateRoom({ roomID, name, description });
   },
 
 };

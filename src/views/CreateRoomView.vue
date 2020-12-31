@@ -29,7 +29,7 @@
                   type="textarea"
                   maxlength="200"
                   v-model.trim="roomData.description"
-                  key="room-create-name-input"
+                  key="room-create-description-input"
                 ></b-input>
                 <!-- <span class="icon is-small is-left">
                   <i class="fas fa-info-circle"></i>

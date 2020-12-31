@@ -25,6 +25,17 @@
               href="#">
                 Create Room
             </b-navbar-item>
+             <b-navbar-dropdown label="Info">
+                <b-navbar-item
+                  tag="router-link"
+                  :to="{ name: 'About' }"
+                  href="#">
+                    About
+                </b-navbar-item>
+                <b-navbar-item href="https://twitter.com/joseluisgonsan">
+                    Contact
+                </b-navbar-item>
+            </b-navbar-dropdown>
         </template>
         <!-- Botones de fin -->
         <template slot="end">

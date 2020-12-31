@@ -27,6 +27,15 @@
             <div class="content">
               {{ room.description }}
             </div>
+            <nav class="buttons is-right">
+              <b-button
+                tag="router-link"
+                :to="{ name: 'Update', params: { id: room.id } }"
+                size="is-small"
+                v-if="room.adminUid === getUserUid">
+                Edit
+            </b-button>
+            </nav>
           </div>
         </div>
       </div>
@@ -36,7 +45,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'RoomsComponent',
@@ -52,6 +61,7 @@ export default {
   computed: {
     // Nos traemos el estado
     ...mapState(['isLoading']),
+    ...mapGetters('user', ['getUserUid']), // cuidado que es un vector
   },
 };
 </script>

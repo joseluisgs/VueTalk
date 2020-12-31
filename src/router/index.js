@@ -8,6 +8,8 @@ const RoomsView = () => import('../views/RoomsView.vue');
 const AuthView = () => import('../views/AuthView.vue');
 const CreateRoomView = () => import('../views/CreateRoomView.vue');
 const UserProfileView = () => import('../views/UserProfileView.vue');
+const UpdateRoomView = () => import('../views/UpdateRoomView.vue');
+const About = () => import('../views/About.vue');
 
 Vue.use(VueRouter);
 
@@ -43,12 +45,20 @@ const routes = [
     },
   },
   {
+    // El parámetro me llega por la ruta y se lo paso como prop
+    path: '/update/:id',
+    name: 'Update',
+    props: true,
+    component: UpdateRoomView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    // El parámetro me llega por la ruta
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: About,
   },
 ];
 
@@ -63,12 +73,15 @@ router.beforeEach(async (to, from, next) => {
   // Nos quedamos con las rutas que tengan la propiedad meta requieresAuth
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
-  // Ahora programamos la lógica del iddleware
+  // Ahora programamos la lógica del middleware
   // Requires auth & no user activo
-  if (requiresAuth && !(await store.dispatch('user/getCurrentUser'))) {
+  if (to.name === 'About') {
+    next();
+  } else if (requiresAuth && !(await store.dispatch('user/getCurrentUser'))) {
     next({ name: 'Auth' });
     // No requires auth and user (auth)
   } else if (!requiresAuth && (await store.dispatch('user/getCurrentUser'))) {
+    // eslint-disable-next-line no-unused-expressions
     next({ name: 'Home' });
   } else {
     // Anything else, lo dejamos pasar.

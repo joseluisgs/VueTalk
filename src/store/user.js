@@ -12,7 +12,12 @@ const state = {
   user: null,
 };
 
-const getters = {};
+const getters = {
+  // Devuelve el uid del usuario
+  getUserUid(state) {
+    return state.user.uid;
+  },
+};
 
 // Las mutaciones actúan y modifican el estado
 const mutations = {
