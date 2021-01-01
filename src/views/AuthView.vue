@@ -138,6 +138,7 @@ export default {
   methods: {
     // Sobre el estado usaremos
     ...mapActions('user', ['userLogin', 'userRegister', 'resetPassword']),
+    ...mapActions('utils', ['toast']),
 
     /**
      * Realiza el login
@@ -149,11 +150,11 @@ export default {
           email: this.userData.email,
           password: this.userData.password,
         });
-        this.$toast.success('Logged In');
+        this.toast({ message: 'Logged In', type: 'is-success' });
         this.resetData();
         this.redirect();
       } catch (error) {
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
         console.error(error.message);
       } finally {
         this.isLoading = false;
@@ -171,11 +172,11 @@ export default {
           email: this.userData.email,
           password: this.userData.password,
         });
-        this.$toast.success('Account Created');
+        this.toast({ message: 'Account Created', type: 'is-success' });
         this.resetData();
         this.redirect();
       } catch (error) {
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
         console.error(error.message);
       } finally {
         this.isLoading = false;
@@ -190,10 +191,10 @@ export default {
       try {
         console.log(this.userData.email);
         await this.resetPassword(this.userData.email);
-        this.$toast.success(`Please check ${this.userData.email} for further instructions`);
+        this.toast({ message: `Please check ${this.userData.email} for further instructions`, type: 'is-success' });
         this.resetData();
       } catch (error) {
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
         console.error(error.message);
       } finally {
         this.isLoading = false;

@@ -78,6 +78,7 @@ export default {
   methods: {
     // Metodos de Vuex
     ...mapActions('user', ['profileUpdate']),
+    ...mapActions('utils', ['toast']),
 
     /**
      * Actualiza el perfil del usuario
@@ -90,10 +91,10 @@ export default {
           email: this.userData.email,
           password: this.userData.password,
         });
-        this.$toast.success('Account data updated');
+        this.toast({ message: 'Account data updated', type: 'is-success' });
         this.resetData();
       } catch (error) {
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
         console.error(error.message);
       } finally {
         this.isLoading = false;

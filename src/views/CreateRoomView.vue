@@ -72,6 +72,7 @@ export default {
   methods: {
     // De vuex
     ...mapActions('rooms', ['roomsCreate']),
+    ...mapActions('utils', ['toast']),
     // Míos
 
     /**
@@ -84,12 +85,12 @@ export default {
           name: this.roomData.name,
           description: this.roomData.description,
         });
-        this.$toast.success('Room created');
+        this.toast({ message: 'Room created', type: 'is-success' });
         this.resetData();
         this.redirect();
       } catch (error) {
         console.error(error.message);
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
       } finally {
         this.isLoading = false;
       }

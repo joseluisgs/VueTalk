@@ -37,17 +37,24 @@
             </b-field>
 
             <div class="field is-grouped is-grouped-right">
-             <div class="buttons">
+              <div class="buttons">
                 <b-button
                   tag="input"
                   type="is-link"
                   native-type="submit"
                   :disabled="!hasDataChanged"
-                  :class="{ 'is-loading': isLoading }"
-                  > Update
+                  :loading="isLoading"
+                >
+                  Update
                 </b-button>
-                <b-button type="is-danger is-light">Delete</b-button>
-             </div>
+                <b-button
+                  type="is-danger is-light"
+                  :loading="isLoading"
+                  @click="removeRoom"
+                >
+                  Delete
+                </b-button>
+              </div>
             </div>
           </form>
           <!-- End of room form -->
@@ -87,7 +94,7 @@ export default {
       this.room = await this.getRoomByID(this.id);
     } catch (error) {
       console.error(error.message);
-      this.$toast.error(error.message);
+      this.toast({ message: error.message, type: 'is-danger' });
       // Empujamos al home si no existe en ningún lado
       this.$router.push({ name: 'Home' });
     }
@@ -96,7 +103,8 @@ export default {
   // Mis métodos
   methods: {
     // De vuex
-    ...mapActions('rooms', ['roomUpdate', 'getRoomByID']),
+    ...mapActions('rooms', ['roomUpdate', 'getRoomByID', 'roomRemove']),
+    ...mapActions('utils', ['toast', 'confirm']),
     // Míos
     /**
      * Actualiza una Sala
@@ -109,11 +117,36 @@ export default {
           name: this.room.name,
           description: this.room.description,
         });
-        this.$toast.success('Room data updated');
+        this.toast({ message: 'Room data updated', type: 'is-success' });
         this.redirect();
       } catch (error) {
         console.error(error.message);
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    /**
+     * Elimina una sala y sus mensajes
+     */
+    async removeRoom() {
+      this.isLoading = true;
+      try {
+        const res = await this.confirm({
+          title: 'Deleting account',
+          message: 'Are you sure you want to <b>delete</b> this room and messages? This action cannot be undone.',
+          confirmText: 'Delete Room',
+          type: 'is-danger',
+        });
+        if (res) {
+          await this.roomRemove(this.id);
+          this.$router.push({ name: 'Home' });
+          this.toast({ message: 'Room removed', type: 'is-success' });
+        }
+      } catch (error) {
+        console.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
       } finally {
         this.isLoading = false;
       }
@@ -136,10 +169,8 @@ export default {
       return this.room.name && this.room.description;
     },
   },
-
 };
 </script>
 
 <style>
-
 </style>

@@ -98,7 +98,7 @@ export default {
       this.getMessages(this.id);
     } catch (error) {
       console.error(error.message);
-      this.$toast.error(error.message);
+      this.toast({ message: error.message, type: 'is-danger' });
       // Empujamos al home si no existe en ningún lado
       this.$router.push({ name: 'Home' });
     }
@@ -118,6 +118,7 @@ export default {
     ...mapMutations('messages', ['setMessagesListener']),
     ...mapActions('messages', ['getMessages', 'messageCreate']),
     ...mapActions('rooms', ['getRoomByID']),
+    ...mapActions('utils', ['toast']),
 
     // Mis métodos
     async createMessage() {
@@ -131,7 +132,7 @@ export default {
         this.clearData();
       } catch (error) {
         console.error(error.message);
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
       } finally {
         this.isLoading = false;
       }

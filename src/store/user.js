@@ -89,6 +89,23 @@ const actions = {
       await User.updateProfile(user, {
         displayName: name,
       });
+      // Si cabiamos el nombre vamos a realizar una transacción para cambiarlo en todos lados
+      Service.db.runTransaction(async (transaction) => {
+        // Cogemos todos los grupos de mensajes
+        // De esta manera nos ahorramos iterar por cara uno de los mensajes de cada una de las salas.
+        // De esta manera lo hacemos del tiron
+        // https://firebase.google.com/docs/firestore/manage-data/transactions
+        // https://firebase.googleblog.com/2019/06/understanding-collection-group-queries.html
+        // https://firebase.google.com/docs/firestore/query-data/queries
+        const query = await Service.db
+          .collectionGroup('messages')
+          .where('userId', '==', state.user.uid)
+          .get();
+
+        query.forEach((doc) => {
+          transaction.update(doc.ref, { userName: name });
+        });
+      });
     }
 
     if (email) {

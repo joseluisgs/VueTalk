@@ -194,9 +194,28 @@ const actions = {
     if (!room) {
       // Grab from Cloud Firestore 🔥
       room = Rooms.getRoom(roomID);
-      if (!room.exists) throw new Error('Could not find room');
+      if (!room) throw new Error('Could not find room');
     }
     return room;
+  },
+
+  /**
+   * Elimina una sala y sus mensajes
+   */
+  async roomRemove(context, roomID) {
+    const room = Service.roomsCollection.doc(roomID);
+    // Borramos todos los documentos
+    const messages = room.collection('messages').onSnapshot((querySnapshot) => {
+      querySnapshot.docs.forEach(async (doc) => {
+        await room
+          .collection('messages')
+          .doc(doc.id)
+          .delete();
+      });
+      messages(); // Unsub
+    });
+    // Borramos la sala
+    await room.delete();
   },
 
 };

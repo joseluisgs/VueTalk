@@ -3,7 +3,7 @@
         <template slot="brand">
             <b-navbar-item
               tag="router-link"
-              :to="{ path: '/' }">
+              :to="{ name: 'Home' }">
                 <img
                     class="navbar__logo"
                     src="../assets/img/VueTalk-logo.png"
@@ -70,6 +70,7 @@ export default {
   // Mis métodos
   methods: {
     ...mapActions('user', ['userLogout']),
+    ...mapActions('utils', ['toast']),
 
     /**
      * Realiza el Log out
@@ -78,14 +79,13 @@ export default {
       try {
         this.userLogout();
         this.$router.push({ name: 'Auth' });
-        this.$toast.success('Logged Out');
+        this.toast({ message: 'Logged Out', type: 'is-success' });
       } catch (error) {
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
         console.error(error.message);
       }
     },
   },
-
   // Mis variables o campos compuados
   computed: {
     ...mapState('user', ['user']),
