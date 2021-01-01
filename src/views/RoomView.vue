@@ -18,6 +18,12 @@
               >
                 <p>
                   {{ message.message }}
+                  <span v-if="message.userId !== getUserUid">
+                    <br />
+                    <small class="message__time">
+                      <i>{{ message.userName }} {{ message.createdAt | timeAgo }} ago</i>
+                    </small>
+                  </span>
                 </p>
               </div>
             </div>
@@ -28,13 +34,13 @@
     <section class="send">
       <!-- Formulario para enviar mensaje -->
       <form @submit.prevent="createMessage" class="form">
-          <b-input
-            placeholder="Write your message here..."
-            required
-            type="textarea"
-            v-model.trim="message"
-            key="message-create-input"
-          ></b-input>
+        <b-input
+          placeholder="Write your message here..."
+          required
+          type="textarea"
+          v-model.trim="message"
+          key="message-create-input"
+        ></b-input>
         <div class="buttons">
           <b-button
             :disabled="!message"
@@ -54,6 +60,12 @@
 import {
   mapState, mapGetters, mapActions, mapMutations,
 } from 'vuex';
+
+// Librería de tiempo y su plugin de tiempo relativo
+const dayjs = require('dayjs');
+const relativeTime = require('dayjs/plugin/relativeTime');
+
+dayjs.extend(relativeTime);
 
 export default {
   name: 'RoomView',
@@ -81,14 +93,7 @@ export default {
   async created() {
     try {
       // Grab from local state
-      let room = await this.getRoom(this.id);
-      // console.log(`Room: ${room.name}`);
-      if (!room) {
-        // Grab from Cloud Firestore 🔥
-        room = await this.getRoomByID(this.id);
-        if (!room) throw new Error('Could not find room');
-      }
-      this.room = room;
+      this.room = await this.getRoomByID(this.id);
       // Una vez tenemos la sala nos traemos los mensajes del id que tenemos como prop
       this.getMessages(this.id);
     } catch (error) {
@@ -158,6 +163,17 @@ export default {
     },
   },
 
+  // Mis filtros
+  filters: {
+    /**
+     * Re devuelve cuánto hace respecto a una fecha dada
+     */
+    timeAgo(timestamp) {
+      const date = new Date(timestamp);
+      return dayjs().from(dayjs(date), true);
+    },
+  },
+
   // Métdos computados para acceder a usuario
   computed: {
     // Nos traemos el estado
@@ -169,6 +185,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.section {
+  padding-bottom: 6rem;
+}
 .messages {
   display: flex;
   flex-direction: column;
@@ -183,9 +202,13 @@ export default {
     width: 75%;
     align-self: flex-end;
   }
+  &__time {
+    color: gray;
+    font-size: 12px;
+  }
 }
 .send {
-  background-color: gray;
+  background-color: lightgray;
   padding: 1rem;
   position: fixed;
   bottom: 0;

@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 
@@ -167,9 +168,9 @@ const actions = {
    * @param {context} context
    * @param {string} roomID
    */
-  async getRoomByID(context, roomID) {
-    return Rooms.getRoom(roomID);
-  },
+  // async getRoomByID(context, roomID) {
+  //   return Rooms.getRoom(roomID);
+  // },
 
   /**
    * actualiza los datos de una sala
@@ -178,6 +179,24 @@ const actions = {
    */
   async roomUpdate(context, { roomID, name, description }) {
     return Rooms.updateRoom({ roomID, name, description });
+  },
+
+  /**
+   * Obtiene una sala a partir de un ID
+   * Primero busca en el estado
+   * Si no en Firebase Firestore
+   * @param {*} param0
+   * @param {*} roomID
+   */
+  async getRoomByID({ getters }, roomID) {
+    // Grab from local state
+    let room = getters.getRoom(roomID);
+    if (!room) {
+      // Grab from Cloud Firestore 🔥
+      room = Rooms.getRoom(roomID);
+      if (!room.exists) throw new Error('Could not find room');
+    }
+    return room;
   },
 
 };

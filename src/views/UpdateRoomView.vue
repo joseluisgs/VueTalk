@@ -84,15 +84,7 @@ export default {
    */
   async created() {
     try {
-      // Grab from local state
-      let room = await this.getRoom(this.id);
-      // console.log(`Room: ${room.name}`);
-      if (!room) {
-        // Grab from Cloud Firestore 🔥
-        room = await this.getRoomByID(this.id);
-        if (!room) throw new Error('Could not find room');
-      }
-      this.room = room;
+      this.room = await this.getRoomByID(this.id);
     } catch (error) {
       console.error(error.message);
       this.$toast.error(error.message);
