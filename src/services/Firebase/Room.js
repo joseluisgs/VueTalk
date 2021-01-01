@@ -35,4 +35,5 @@ export default {
     if (description) roomData.description = description;
     return Service.roomsCollection.doc(roomID).update(roomData);
   },
+
 };

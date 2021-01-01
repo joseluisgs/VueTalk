@@ -5,7 +5,7 @@
         Rooms
       </h1>
       <!-- Insertamos el componente con la lista -->
-      <RoomsComponent :rooms="rooms" />
+      <RoomsComponent :rooms="rooms" v-if="user"/>
     </div>
   </section>
 </template>
@@ -21,12 +21,6 @@ export default {
   components: {
     RoomsComponent,
   },
-
-  // Mi modelo de datos
-  data: () => ({
-    user: null,
-    listRooms: null,
-  }),
 
   // // Mi Métodos
   // methods: {
@@ -57,6 +51,7 @@ export default {
   // Metodos computados
   computed: {
     ...mapState('rooms', ['rooms']),
+    ...mapState('user', ['user']),
   },
 };
 </script>

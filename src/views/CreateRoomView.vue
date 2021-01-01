@@ -43,7 +43,7 @@
                   tag="input"
                   type="is-link"
                   native-type="submit"
-                  :class="{ 'is-loading': isLoading }"
+                  :loading ="isLoading"
                   >Create
                 </b-button>
               </div>

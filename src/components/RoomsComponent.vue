@@ -8,36 +8,40 @@
     <div v-else class="columns is-multiline">
       <!-- Room element -->
       <div v-for="room in rooms" :key="room.id" class="column is-one-third">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-16by9">
-              <img
-                src="https://bulma.io/images/placeholders/1280x960.png"
-                alt="Placeholder image"
-              />
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <p class="title is-4">{{ room.name }}</p>
-                <p class="subtitle is-6">by {{ room.adminName }}</p>
+        <!-- Le envolvemos el enlnace -->
+        <router-link :to="{ name: 'View', params: { id: room.id } }">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-16by9">
+                <img
+                  src="https://bulma.io/images/placeholders/1280x960.png"
+                  alt="Placeholder image"
+                />
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <p class="title is-4">{{ room.name }}</p>
+                  <p class="subtitle is-6">by {{ room.adminName }}</p>
+                </div>
               </div>
+              <div class="content">
+                {{ room.description }}
+              </div>
+              <nav class="buttons is-right">
+                <b-button
+                  tag="router-link"
+                  :to="{ name: 'Update', params: { id: room.id } }"
+                  size="is-small"
+                  v-if="room.adminUid === getUserUid"
+                >
+                  Edit
+                </b-button>
+              </nav>
             </div>
-            <div class="content">
-              {{ room.description }}
-            </div>
-            <nav class="buttons is-right">
-              <b-button
-                tag="router-link"
-                :to="{ name: 'Update', params: { id: room.id } }"
-                size="is-small"
-                v-if="room.adminUid === getUserUid">
-                Edit
-            </b-button>
-            </nav>
           </div>
-        </div>
+        </router-link>
       </div>
       <!-- End of room element -->
     </div>

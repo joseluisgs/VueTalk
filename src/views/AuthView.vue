@@ -30,7 +30,7 @@
                     tag="input"
                     type="is-link"
                     native-type="submit"
-                    :class="{ 'is-loading': isLoading }"
+                    :loading ="isLoading"
                   >Login
                   </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->
@@ -76,7 +76,7 @@
                     tag="input"
                     type="is-link"
                     native-type="submit"
-                    :class="{ 'is-loading': isLoading }"
+                    :loading ="isLoading"
                   >Register
                   </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->
@@ -105,7 +105,7 @@
                     tag="input"
                     type="is-link"
                     native-type="submit"
-                    :class="{ 'is-loading': isLoading }"
+                    :loading ="isLoading"
                   >Reset
                 </b-button>
                 </div>

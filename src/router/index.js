@@ -9,6 +9,7 @@ const AuthView = () => import('../views/AuthView.vue');
 const CreateRoomView = () => import('../views/CreateRoomView.vue');
 const UserProfileView = () => import('../views/UserProfileView.vue');
 const UpdateRoomView = () => import('../views/UpdateRoomView.vue');
+const RoomView = () => import('../views/RoomView.vue');
 const About = () => import('../views/About.vue');
 
 Vue.use(VueRouter);
@@ -50,6 +51,16 @@ const routes = [
     name: 'Update',
     props: true,
     component: UpdateRoomView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    // El parámetro me llega por la ruta y se lo paso como prop
+    path: '/view/:id',
+    name: 'View',
+    props: true,
+    component: RoomView,
     meta: {
       requiresAuth: true,
     },

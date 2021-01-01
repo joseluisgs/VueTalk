@@ -46,8 +46,12 @@ const mutations = {
    * @param {*} room
    */
   createRoom(state, { roomData, id }) {
+    // Primero debemos buscar que no exista
     roomData.id = id;
-    state.rooms.unshift(roomData);
+    const indice = state.rooms.find((room) => room.id === id);
+    if (!indice) {
+      state.rooms.unshift(roomData);
+    }
   },
 
   /**
@@ -129,6 +133,7 @@ const actions = {
 
     // Analizando los tipos de cambios dependiendo de la actualización a realizar soebre los documentos
     const query = Service.roomsCollection.orderBy('createdAt', 'desc').onSnapshot((querySnapshot) => {
+      // Aceptamos y nos suscribiemos a los cambios
       commit('setRoomsListener', query);
       commit('setLoading', true, { root: true });
       querySnapshot.docChanges().forEach((change) => {

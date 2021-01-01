@@ -47,7 +47,7 @@
                     type="is-link"
                     native-type="submit"
                     :disabled="!hasDataChanged"
-                    :class="{ 'is-loading': isLoading }"
+                    :loading="isLoading"
                   >Actualizar
                   </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->

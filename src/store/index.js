@@ -45,10 +45,12 @@ const store = new Vuex.Store({
           commit('user/setUser', user);
           dispatch('rooms/getRooms');
         } else {
+          // Cuando no hay autentificación desactivamos los listeners y quitamos los datos
           commit('user/setUser', null);
           commit('rooms/setRooms', []);
-          // Cuando no hay autentificación desactivamos los listeners
           commit('rooms/setRoomsListener', () => { });
+          commit('messages/setMessages', []);
+          commit('messages/setMessagesListener', () => { });
         }
       });
     },
