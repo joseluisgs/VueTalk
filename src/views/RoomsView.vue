@@ -25,6 +25,7 @@ export default {
   // Mi modelo de datos
   data: () => ({
     user: null,
+    listRooms: null,
   }),
 
   // // Mi Métodos
