@@ -29,7 +29,7 @@ const actions = {
         message,
         confirmText,
         type,
-        hasIcon: false, // Para el icono hay que meterle la librería
+        hasIcon: true, // Para el icono hay que meterle la librería
         onConfirm: () => resolve(true),
         onCancel: () => resolve(false),
       });

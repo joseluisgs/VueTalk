@@ -34,6 +34,7 @@
                   tag="router-link"
                   :to="{ name: 'Update', params: { id: room.id } }"
                   size="is-small"
+                  icon-left="pencil"
                   v-if="room.adminUid === getUserUid"
                 >
                   Edit

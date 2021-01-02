@@ -1,64 +1,53 @@
 <template>
-    <b-navbar>
-        <template slot="brand">
-            <b-navbar-item
+  <b-navbar>
+    <template slot="brand">
+      <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
+        <img
+          class="navbar__logo"
+          src="../assets/img/VueTalk-logo.png"
+          alt="Vue Talk en Vue"
+        />
+      </b-navbar-item>
+    </template>
+    <!-- Navegación -->
+    <template slot="start">
+      <b-navbar-item tag="router-link" :to="{ name: 'Home' }" href="#">
+        Home
+      </b-navbar-item>
+      <b-navbar-item tag="router-link" :to="{ name: 'Create' }" href="#">
+        Create Room
+      </b-navbar-item>
+      <b-navbar-dropdown label="Info">
+        <b-navbar-item tag="router-link" :to="{ name: 'About' }" href="#">
+          About
+        </b-navbar-item>
+        <b-navbar-item href="https://twitter.com/joseluisgonsan">
+          Contact
+        </b-navbar-item>
+      </b-navbar-dropdown>
+    </template>
+    <!-- Botones de fin -->
+    <template slot="end">
+      <b-navbar-item tag="div">
+        <b-navbar-item v-if="user"> Hi!, {{ user.displayName }} </b-navbar-item>
+        <div class="buttons">
+          <template v-if="user">
+            <b-button
               tag="router-link"
-              :to="{ name: 'Home' }">
-                <img
-                    class="navbar__logo"
-                    src="../assets/img/VueTalk-logo.png"
-                    alt="Vue Talk en Vue"
-                >
-            </b-navbar-item>
-        </template>
-        <!-- Navegación -->
-        <template slot="start">
-            <b-navbar-item
-              tag="router-link"
-              :to="{ name: 'Home' }"
-              href="#">
-                Home
-            </b-navbar-item>
-            <b-navbar-item
-              tag="router-link"
-              :to="{ name: 'Create' }"
-              href="#">
-                Create Room
-            </b-navbar-item>
-             <b-navbar-dropdown label="Info">
-                <b-navbar-item
-                  tag="router-link"
-                  :to="{ name: 'About' }"
-                  href="#">
-                    About
-                </b-navbar-item>
-                <b-navbar-item href="https://twitter.com/joseluisgonsan">
-                    Contact
-                </b-navbar-item>
-            </b-navbar-dropdown>
-        </template>
-        <!-- Botones de fin -->
-        <template slot="end">
-            <b-navbar-item tag="div">
-              <b-navbar-item v-if="user"><i class="fas fa-user-alt"></i>  Hi!, {{user.displayName}}</b-navbar-item>
-                <div class="buttons">
-                  <template v-if="user">
-                    <b-button
-                      tag="router-link"
-                      :to="{ name: 'Profile' }"
-                      type="is-primary">
-                      <strong>Profile</strong>
-                    </b-button>
-                    <b-button
-                      type="is-light"
-                      @click="doLogout">
-                      Logout
-                    </b-button>
-                  </template>
-                </div>
-            </b-navbar-item>
-        </template>
-    </b-navbar>
+              :to="{ name: 'Profile' }"
+              type="is-primary"
+              icon-left="account"
+            >
+              <strong>Profile</strong>
+            </b-button>
+            <b-button type="is-light" @click="doLogout" icon-left="logout">
+              Logout
+            </b-button>
+          </template>
+        </div>
+      </b-navbar-item>
+    </template>
+  </b-navbar>
 </template>
 
 <script>

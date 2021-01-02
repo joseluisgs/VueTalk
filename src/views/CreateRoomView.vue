@@ -7,22 +7,17 @@
 
           <form @submit.prevent="createRoom">
             <b-field label="Name" position="is-left">
-              <p class="control has-icons-left has-icons-right">
                 <b-input
                   placeholder="e.g. Black Cat mania 😼"
                   required
                   type="text"
                   v-model.trim="roomData.name"
                   key="room-create-name-input"
+                  icon ="chat-processing-outline"
                 ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fab fa-forumbee"></i>
-                </span>
-              </p>
             </b-field>
 
             <b-field label="Description" position="is-left">
-              <p class="control has-icons-left has-icons-right">
                 <b-input
                   placeholder="e.g. Let's talk about why Black Cat's are fucking awesome"
                   required
@@ -31,19 +26,15 @@
                   v-model.trim="roomData.description"
                   key="room-create-description-input"
                 ></b-input>
-                <!-- <span class="icon is-small is-left">
-                  <i class="fas fa-info-circle"></i>
-                </span> -->
-              </p>
             </b-field>
 
             <div class="field is-grouped has-text-right">
               <div class="buttons">
                 <b-button
-                  tag="input"
                   type="is-link"
                   native-type="submit"
                   :loading ="isLoading"
+                  icon-left="chat-plus"
                   >Create
                 </b-button>
               </div>

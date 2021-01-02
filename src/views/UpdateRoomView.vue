@@ -7,17 +7,13 @@
           <!-- Room form -->
           <form v-if="room" @submit.prevent="updateRoom">
             <b-field label="Name" position="is-left">
-              <p class="control has-icons-left has-icons-right">
                 <b-input
                   placeholder="room.name"
                   type="text"
                   v-model.trim="room.name"
+                  icon="chat-processing"
                   key="room-update-name-input"
                 ></b-input>
-                <span class="icon is-small is-left">
-                  <i class="fab fa-forumbee"></i>
-                </span>
-              </p>
             </b-field>
 
             <b-field label="Description" position="is-left">
@@ -39,17 +35,18 @@
             <div class="field is-grouped is-grouped-right">
               <div class="buttons">
                 <b-button
-                  tag="input"
                   type="is-link"
                   native-type="submit"
                   :disabled="!hasDataChanged"
                   :loading="isLoading"
+                  icon-left="pencil"
                 >
                   Update
                 </b-button>
                 <b-button
-                  type="is-danger is-light"
+                  type="is-danger"
                   :loading="isLoading"
+                  icon-left="delete"
                   @click="removeRoom"
                 >
                   Delete
