@@ -1,5 +1,8 @@
 <template>
-  <b-navbar>
+  <b-navbar
+    type="is-primary"
+    shadow
+    fixed-top>
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
         <img
@@ -35,7 +38,7 @@
             <b-button
               tag="router-link"
               :to="{ name: 'Profile' }"
-              type="is-primary"
+              type="is-info"
               icon-left="account"
             >
               <strong>Profile</strong>

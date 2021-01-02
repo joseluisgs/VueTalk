@@ -44,10 +44,10 @@
         <div class="buttons">
           <b-button
             :disabled="!message"
-            tag="input"
             type="is-info"
             native-type="submit"
             :loading="isLoading"
+            icon-left="send"
             >Send
           </b-button>
         </div>
@@ -187,13 +187,13 @@ export default {
 
 <style lang="scss" scoped>
 .section {
-  padding-bottom: 6rem;
+  padding-bottom: 1rem;
 }
 .messages {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  padding-bottom: 90px;
+  padding-bottom: 14rem;
 }
 .message {
   padding: 1rem;
@@ -215,6 +215,7 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 12rem;
 }
 .form {
   display: flex;

@@ -3,19 +3,24 @@
     <NavBar />
     <!-- Añadimos una transicion
      https://vuejs.org/v2/guide/transitions.html -->
+
     <transition name="fade" mode="out-in">
       <router-view />
     </transition>
+
+    <Footer />
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue';
+import Footer from './components/Footer.vue';
 
 export default {
   name: 'App',
   components: {
     NavBar,
+    Footer,
   },
 };
 </script>
@@ -38,4 +43,5 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+
 </style>
