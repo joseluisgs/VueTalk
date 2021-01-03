@@ -1,8 +1,5 @@
 <template>
-  <b-navbar
-    type="is-primary"
-    shadow
-    fixed-top>
+  <b-navbar type="is-primary" shadow fixed-top>
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
         <img
@@ -59,11 +56,17 @@ import { mapState, mapActions } from 'vuex';
 export default {
   name: 'NavBar',
 
+  // Mi modelo
+  data: () => ({
+    lightMode: true,
+    element: null,
+    theme: '',
+  }),
+
   // Mis métodos
   methods: {
     ...mapActions('user', ['userLogout']),
     ...mapActions('utils', ['toast']),
-
     /**
      * Realiza el Log out
      */
