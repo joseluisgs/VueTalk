@@ -140,14 +140,14 @@ const actions = {
       querySnapshot.docChanges().forEach((change) => {
         // El cambio es añadir un nuevo elemento: sala
         if (change.type === 'added') {
-          console.log('--> added');
+          console.log('Change --> added');
           commit('createRoom', {
             roomData: change.doc.data(),
             id: change.doc.id,
           });
         // El cambio es actualizar un elemento: sala
         } else if (change.type === 'modified') {
-          console.log('--> modified');
+          console.log('Change --> modified');
           commit('updateRoom', {
             // index: change.newIndex, // Este es el indice que queremos modificar, pero falla siempre devuelve cero
             roomData: change.doc.data(),
@@ -155,7 +155,7 @@ const actions = {
           });
         // El cambio es eliminar un elemento: sala
         } else if (change.type === 'removed') {
-          console.log('--> removed');
+          console.log('Change --> removed');
           commit('removeRoom', change.oldIndex);
         }
         commit('setLoading', false, { root: true });

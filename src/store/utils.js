@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 // Utilidades
 // Buefy
 // https://buefy.org/documentation/toast/
@@ -35,6 +36,7 @@ const actions = {
       });
     });
   },
+
 };
 
 export default {
