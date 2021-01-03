@@ -3,11 +3,9 @@
     <NavBar />
     <!-- Añadimos una transicion
      https://vuejs.org/v2/guide/transitions.html -->
-
     <transition name="fade" mode="out-in">
       <router-view />
     </transition>
-
     <Footer />
   </div>
 </template>

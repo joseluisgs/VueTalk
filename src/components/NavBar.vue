@@ -46,6 +46,14 @@
           </template>
         </div>
       </b-navbar-item>
+      <b-switch v-model="darkMode" passive-type="is-warning" type="is-dark">
+        <span v-if="darkMode === true">
+          <img alt="logo" src="../assets/img/moon.png" width="25" />
+        </span>
+        <span v-else>
+          <img alt="logo" src="../assets/img/sun.png" width="25" />
+        </span>
+      </b-switch>
     </template>
   </b-navbar>
 </template>
@@ -58,10 +66,32 @@ export default {
 
   // Mi modelo
   data: () => ({
-    lightMode: true,
-    element: null,
-    theme: '',
+    darkMode: true,
   }),
+
+  // Ciclos de vida
+  // Lo hacemos en el munted y no en el created porque necesitamos acceder al DOM
+  // https://codingpotions.com/vue-ciclo-vida
+  mounted() {
+    // set page title
+    // document.title = 'Multiple Themes in Vue.js';
+
+    // set 'app-background' class to body tag
+    const bodyElement = document.body;
+    bodyElement.classList.add('app-background');
+
+    // check for active theme
+    const htmlElement = document.documentElement;
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'dark') {
+      htmlElement.setAttribute('theme', 'dark');
+      this.darkMode = true;
+    } else {
+      htmlElement.setAttribute('theme', 'light');
+      this.darkMode = false;
+    }
+  },
 
   // Mis métodos
   methods: {
@@ -84,6 +114,20 @@ export default {
   // Mis variables o campos compuados
   computed: {
     ...mapState('user', ['user']),
+  },
+
+  watch: {
+    darkMode() {
+      // add/remove class to/from html tag
+      const htmlElement = document.documentElement;
+      if (this.darkMode) {
+        localStorage.setItem('theme', 'dark');
+        htmlElement.setAttribute('theme', 'dark');
+      } else {
+        localStorage.setItem('theme', 'light');
+        htmlElement.setAttribute('theme', 'light');
+      }
+    },
   },
 };
 </script>

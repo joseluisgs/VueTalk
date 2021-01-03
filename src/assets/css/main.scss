@@ -1,7 +1,17 @@
 @import '~bulma/bulma';
+@import 'theme-colors';
 
 html {
   overflow:scroll; // Saco la barra de scroll
-  height:100%; // siempre que sobrepase el 100%
   overflow-x: hidden; // Escondo la barra horizontal
+  background-color: var(--app-background-color);
 }
+
+h1.title {
+  color: var(--dynamic-title-color);
+}
+
+.app-background {
+  background-color: var(--app-background-color);
+}
+
