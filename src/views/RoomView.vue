@@ -16,12 +16,14 @@
                   'message--own': message.userId === getUserUid,
                 }"
               >
-                <p>
+                <p class="message__text">
                   {{ message.message }}
-                  <span v-if="message.userId !== getUserUid">
+                  <span>
                     <br />
                     <small class="message__time">
-                      <i>{{ message.userName }} {{ message.createdAt | timeAgo }} ago</i>
+                      <i v-if="message.userId !== getUserUid">{{ message.userName }}</i>
+                      <i v-else>Me</i>
+                      <i>: {{ message.createdAt | timeAgo }} ago</i>
                     </small>
                   </span>
                 </p>
@@ -206,6 +208,9 @@ export default {
   &__time {
     color: gray;
     font-size: 12px;
+  }
+  &__text {
+    color: rgb(61, 61, 61)
   }
 }
 .send {

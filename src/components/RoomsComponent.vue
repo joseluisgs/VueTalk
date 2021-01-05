@@ -22,8 +22,8 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-content">
-                  <p class="title is-4">{{ room.name }}</p>
-                  <p class="subtitle is-6">by {{ room.adminName }}</p>
+                  <p class="title is-4 dynamic-title">{{ room.name }}</p>
+                  <p class="subtitle is-6 dynamic-subtitle">by {{ room.adminName }}</p>
                 </div>
               </div>
               <div class="content">
@@ -70,3 +70,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.content {
+  height: 3rem;
+}
+
+</style>

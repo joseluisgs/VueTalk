@@ -1,11 +1,27 @@
+// Creamos los temas claros y oscuros con las psudoclases
+// Por defecto usamos :root
+// https://developer.mozilla.org/es/docs/Web/CSS/:root
+// Esta será la pusdoclase que inyectemos  en todo momento sobre los elementos
+
+// Definimos cada clase con los colores que queramos o tipos d eletras o lo que sea usando las custom vars
+
 :root {
-    $app-background-color: #FFFFFF;
+    --app-background-color: #FFFFFF;
+    --app-background-secoundary-color:#f7f7f7;
     --dynamic-title-color: #363636;
-    --dynamic-subtitle-color: #4a4a4a;
+    --dynamic-subtitle-color: #4a4a4a; 
+    --dynamic-text-color: black;
 }
 
 [theme="dark"] {
     --app-background-color: #091A28;
+    --app-background-secoundary-color: #2f4a63;
     --dynamic-title-color: #FFFFFF;
     --dynamic-subtitle-color: cyan;
+    --dynamic-text-color: white;
 }
+
+// Nos podemos crear todos los estilos que querdamos
+/* [theme="sepia"] {
+    --app-background-color: #F1E7D0;
+} */

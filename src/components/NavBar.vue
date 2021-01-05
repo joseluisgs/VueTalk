@@ -72,31 +72,16 @@ export default {
   // Ciclos de vida
   // Lo hacemos en el munted y no en el created porque necesitamos acceder al DOM
   // https://codingpotions.com/vue-ciclo-vida
-  mounted() {
-    // set page title
-    // document.title = 'Multiple Themes in Vue.js';
-
-    // set 'app-background' class to body tag
-    const bodyElement = document.body;
-    bodyElement.classList.add('app-background');
-
+  async mounted() {
+    // Nos lo llevamos a VUEX: Utils
     // check for active theme
-    const htmlElement = document.documentElement;
-    const theme = localStorage.getItem('theme');
-
-    if (theme === 'dark') {
-      htmlElement.setAttribute('theme', 'dark');
-      this.darkMode = true;
-    } else {
-      htmlElement.setAttribute('theme', 'light');
-      this.darkMode = false;
-    }
+    this.darkMode = await this.loadTheme();
   },
 
   // Mis métodos
   methods: {
     ...mapActions('user', ['userLogout']),
-    ...mapActions('utils', ['toast']),
+    ...mapActions('utils', ['toast', 'changeTheme', 'loadTheme']),
     /**
      * Realiza el Log out
      */
@@ -117,15 +102,13 @@ export default {
   },
 
   watch: {
-    darkMode() {
+    async darkMode() {
+      // Nos lo llevamos a VUEX: Utils
       // add/remove class to/from html tag
-      const htmlElement = document.documentElement;
       if (this.darkMode) {
-        localStorage.setItem('theme', 'dark');
-        htmlElement.setAttribute('theme', 'dark');
+        await this.changeTheme({ theme: 'dark' });
       } else {
-        localStorage.setItem('theme', 'light');
-        htmlElement.setAttribute('theme', 'light');
+        await this.changeTheme({ theme: 'light' });
       }
     },
   },

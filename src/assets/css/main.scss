@@ -1,17 +1,52 @@
+// Importamos el estilo de bulma, el cual si queremos podemos sobresescribir. Lo veremos más adelante
+// https://bulma.io/documentation/customize/with-node-sass/
 @import '~bulma/bulma';
+
+// Importamos nuestros temas de colores y hacemos uso de custom vars de CSS
+// https://developer.mozilla.org/es/docs/Web/CSS/Using_CSS_custom_properties
 @import 'theme-colors';
 
 html {
-  overflow:scroll; // Saco la barra de scroll
+  overflow: scroll; // Saco la barra de scroll
   overflow-x: hidden; // Escondo la barra horizontal
   background-color: var(--app-background-color);
 }
 
+// Instancia de de VUE
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--dynamic-text-color);
+}
+
+// Elementos para colores especificos según el tema
 h1.title {
   color: var(--dynamic-title-color);
 }
 
+label.label {
+  color: var(--dynamic-title-color);
+}
+
+.card {
+  background-color: var(--app-background-secoundary-color);
+  color: var(--dynamic-title-color);
+}
+
+
+
+// Elementos propios que aparecerán como clases
 .app-background {
   background-color: var(--app-background-color);
 }
 
+// Algunos estilos propios que voy a usar en algunos elementos, por ejemplo para no modificar el h1.title
+.dynamic-title {
+  color: var(--dynamic-title-color);
+}
+
+.dynamic-subtitle {
+  color: var(--dynamic-subtitle-color);
+  // padding-top: 10px;
+}
