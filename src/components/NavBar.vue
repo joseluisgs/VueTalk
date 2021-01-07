@@ -29,7 +29,7 @@
     <!-- Botones de fin -->
     <template slot="end">
       <b-navbar-item tag="div">
-        <b-navbar-item v-if="user"> Hi!, {{ user.displayName }} </b-navbar-item>
+        <b-navbar-item v-if="user" tag="div"> Hi!, {{ user.displayName }} </b-navbar-item>
         <div class="buttons">
           <template v-if="user">
             <b-button
