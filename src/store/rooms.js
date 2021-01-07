@@ -24,6 +24,11 @@ const getters = {
    * @param {state} state
    */
   getRoom: (state) => (id) => state.rooms.find((room) => room.id === id),
+  /**
+   * Devuelve las salas ordenadas por fecha descedente
+   * @param {*} state
+   */
+  roomsByDate: (state) => state.rooms.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
 };
 
 const mutations = {
@@ -49,9 +54,9 @@ const mutations = {
   createRoom(state, { roomData, id }) {
     // Primero debemos buscar que no exista
     roomData.id = id;
-    const indice = state.rooms.find((room) => room.id === id);
-    if (!indice) {
-      state.rooms.unshift(roomData);
+    const room = state.rooms.find((room) => room.id === id);
+    if (!room) {
+      state.rooms.push(roomData);
     }
   },
 
@@ -65,8 +70,10 @@ const mutations = {
     // index no funciona, porque devuelve siempre 0, por eso hay que buscar por el ID de la sala
     roomData.id = id;
     // Obtenemos la información
-    const indice = state.rooms.find((room) => room.id === id);
-    state.rooms[indice] = roomData; //   state.rooms[index] = roomData;
+    const indice = state.rooms.findIndex((room) => room.id === id);
+    if (indice !== -1) {
+      state.rooms[indice] = roomData; //   state.rooms[index] = roomData;
+    }
   },
 
   /**
@@ -74,8 +81,12 @@ const mutations = {
    * @param {*} state
    * @param {*} index
    */
-  removeRoom(state, index) {
-    state.rooms.splice(index, 1);
+  removeRoom(state, id) {
+    // Obtenemos la información
+    const indice = state.rooms.findIndex((room) => room.id === id);
+    if (indice !== -1) {
+      state.rooms.splice(indice, 1);
+    }
   },
 
   /**
@@ -156,7 +167,7 @@ const actions = {
         // El cambio es eliminar un elemento: sala
         } else if (change.type === 'removed') {
           console.log('Change --> removed');
-          commit('removeRoom', change.oldIndex);
+          commit('removeRoom', change.doc.id);
         }
         commit('setLoading', false, { root: true });
       });
@@ -193,7 +204,7 @@ const actions = {
     let room = getters.getRoom(roomID);
     if (!room) {
       // Grab from Cloud Firestore 🔥
-      room = Rooms.getRoom(roomID);
+      room = await Rooms.getRoom(roomID);
       if (!room) throw new Error('Could not find room');
     }
     return room;
@@ -203,19 +214,26 @@ const actions = {
    * Elimina una sala y sus mensajes
    */
   async roomRemove(context, roomID) {
-    const room = Service.roomsCollection.doc(roomID);
-    // Borramos todos los documentos
-    const messages = room.collection('messages').onSnapshot((querySnapshot) => {
-      querySnapshot.docs.forEach(async (doc) => {
-        await room
-          .collection('messages')
-          .doc(doc.id)
-          .delete();
+    const room = await Service.roomsCollection.doc(roomID);
+    const roomData = await (await room.get()).data();
+    const userData = await Service.auth.currentUser;
+    // si depende del administrador de firestore me fallaba
+    if (roomData.adminUid === userData.uid) {
+      // Borramos todos los documentos
+      const messages = await room.collection('messages').onSnapshot(async (querySnapshot) => {
+        await querySnapshot.docs.forEach(async (doc) => {
+          await room
+            .collection('messages')
+            .doc(doc.id)
+            .delete();
+        });
+        messages(); // Unsub
       });
-      messages(); // Unsub
-    });
-    // Borramos la sala
-    await room.delete();
+      // Borramos la sala
+      await room.delete();
+    } else {
+      throw new Error('User is not admin of this room');
+    }
   },
 
 };

@@ -88,8 +88,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-content {
-  height: 13rem;
+.card {
+  height: 100%;
 }
 .room {
   position: relative;

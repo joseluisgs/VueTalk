@@ -35,8 +35,9 @@ Algunos aspectos reseñables:
 
 - Dispone de un sistema para autentificar y registrar los usuarios. [Firebase Auth](https://firebase.google.com/docs/auth).
 - Crear salas de conversación e interactuar con ellas y con otros usuarios, en tiempo real. [Cloud Firestore](https://firebase.google.com/docs/firestore?hl=es).
+- Reglas de seguridad y permiso para acceder a las salas con [Cloud Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started#testing_rules)
 - Editar las salas, cambiar su portada y enviar archivos multimedia. Cloud Storage y Cloud Functions.
-- Elementos de Vue, VueCLI, Vuex, Vue Router y demás.
+- Elementos de [Vue](https://vuejs.org/v2/guide/), [VueCLI](https://cli.vuejs.org/guide/), [Vuex](https://vuex.vuejs.org/guide/), [Vue Router](https://router.vuejs.org/guide/) y demás.
 - Despliegue en Firebase Hosting, Netlify y/o Heroku (Estos dos son opcionales).
 
 ## Project setup

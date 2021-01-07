@@ -13,6 +13,7 @@
                   v-model.trim="room.name"
                   icon="chat-processing"
                   key="room-update-name-input"
+                   minlength="3"
                 ></b-input>
             </b-field>
 
@@ -25,6 +26,7 @@
                   maxlength="200"
                   v-model.trim="room.description"
                   key="room-update-description-input"
+                  minlength="3"
                 ></b-input>
                 <!-- <span class="icon is-small is-left">
                   <i class="fas fa-info-circle"></i>
@@ -138,8 +140,8 @@ export default {
         });
         if (res) {
           await this.roomRemove(this.id);
-          this.$router.push({ name: 'Home' });
           this.toast({ message: 'Room removed', type: 'is-success' });
+          this.redirect();
         }
       } catch (error) {
         console.error(error.message);
@@ -155,6 +157,13 @@ export default {
     redirect() {
       setTimeout(() => this.$router.push({ name: 'Home' }), 1000);
     },
+
+    /**
+     * Comprueba alguna longitud de datos
+     */
+    checkData() {
+      return this.room.name.name.length > 3 && this.room.name.description.length > 3;
+    },
   },
 
   computed: {
@@ -163,7 +172,7 @@ export default {
      * Comprueba que haya cambios en los dos campos
      */
     hasDataChanged() {
-      return this.room.name && this.room.description;
+      return this.room.name.length >= 3 && this.room.description.length >= 3;
     },
   },
 };

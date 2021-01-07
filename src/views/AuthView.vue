@@ -3,47 +3,90 @@
     <div class="container">
       <div class="columns">
         <div class="column is-half is-offset-one-quarter">
-
           <!-- Loging form -->
-          <template v-if="action==='login'">
+          <template v-if="action === 'login'">
             <h1 class="title has-text-centered">Login</h1>
             <form @submit.prevent="doLogin">
               <b-field label="Email" position="is-left">
-                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="login-user-mail-input"></b-input>
+                <b-input
+                  placeholder="your@mail.com"
+                  required
+                  type="email"
+                  icon="email"
+                  v-model.trim="userData.email"
+                  key="login-user-mail-input"
+                  minlength="5"
+                ></b-input>
               </b-field>
               <b-field label="Password" position="is-left">
-                  <b-input placeholder="password" required type="password" icon="lock" v-model.trim="userData.password" key="login-user-password-input"></b-input>
+                <b-input
+                  placeholder="password"
+                  required
+                  type="password"
+                  icon="lock"
+                  v-model.trim="userData.password"
+                  key="login-user-password-input"
+                   minlength="5"
+                ></b-input>
               </b-field>
               <div class="field is-grouped has-text-right">
                 <div class="buttons">
                   <b-button
                     type="is-link"
                     native-type="submit"
-                    :loading = "isLoading"
-                    icon-left = "login"
-                  >Login
+                    :loading="isLoading"
+                    icon-left="login"
+                    >Login
                   </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->
                 </div>
               </div>
-              <a class="is-block" href="#" @click="action='register'">Don't have an account?</a>
-              <a class="is-block" href="#" @click="action = 'reset'">Forgot your password?</a>
+              <a class="is-block" href="#" @click="action = 'register'"
+                >Don't have an account?</a
+              >
+              <a class="is-block" href="#" @click="action = 'reset'"
+                >Forgot your password?</a
+              >
             </form>
           </template>
           <!-- End Loging form -->
 
           <!-- Register form -->
-          <template v-if="action==='register'">
+          <template v-if="action === 'register'">
             <h1 class="title has-text-centered">Register</h1>
             <form @submit.prevent="doRegister">
               <b-field label="Name" position="is-left">
-                  <b-input placeholder="Your Name" required type="text" icon="account" v-model.trim="userData.name" key="register-user-name-input"></b-input>
+                <b-input
+                  placeholder="Your Name"
+                  required
+                  type="text"
+                  icon="account"
+                  v-model.trim="userData.name"
+                  key="register-user-name-input"
+                  minlength="5"
+                ></b-input>
               </b-field>
               <b-field label="Email" position="is-left">
-                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="register-user-mail-input"></b-input>
+                <b-input
+                  placeholder="your@mail.com"
+                  required
+                  type="email"
+                  icon="email"
+                  v-model.trim="userData.email"
+                  key="register-user-mail-input"
+                  minlength="5"
+                ></b-input>
               </b-field>
               <b-field label="Password" position="is-left">
-                  <b-input placeholder="password" required type="password" icon="lock" v-model.trim="userData.password" key="register-user-password-input"></b-input>
+                <b-input
+                  placeholder="password"
+                  required
+                  type="password"
+                  icon="lock"
+                  v-model.trim="userData.password"
+                  key="register-user-password-input"
+                  minlength="5"
+                ></b-input>
               </b-field>
               <div class="field is-grouped has-text-righ">
                 <div class="buttons">
@@ -51,13 +94,14 @@
                     type="is-link"
                     native-type="submit"
                     icon-left="account-plus"
-                    :loading ="isLoading"
-                  >Register
+                    :disabled="!hasDataChanged"
+                    :loading="isLoading"
+                    >Register
                   </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->
                 </div>
               </div>
-              <a href="#" @click="action='login'">Want to login?</a>
+              <a href="#" @click="action = 'login'">Want to login?</a>
             </form>
           </template>
           <!-- End Loging form -->
@@ -67,20 +111,30 @@
             <h1 class="title has-text-centered">Reset</h1>
             <form @submit.prevent="doReset">
               <b-field label="Email" position="is-left">
-                  <b-input placeholder="your@mail.com" required type="email" icon="email" v-model.trim="userData.email" key="reset-user-mail-input"></b-input>
+                <b-input
+                  placeholder="your@mail.com"
+                  required
+                  type="email"
+                  icon="email"
+                  v-model.trim="userData.email"
+                  key="reset-user-mail-input"
+                  minlength="5"
+                ></b-input>
               </b-field>
-             <div class="field is-grouped has-text-righ">
+              <div class="field is-grouped has-text-righ">
                 <div class="buttons">
                   <b-button
                     type="is-link"
                     native-type="submit"
-                    :loading ="isLoading"
-                    icon-left = "lock-reset"
-                  >Reset
-                </b-button>
+                    :loading="isLoading"
+                    icon-left="lock-reset"
+                    >Reset
+                  </b-button>
                 </div>
               </div>
-              <a href="#" @click="action = 'register'">Don't have an account?</a>
+              <a href="#" @click="action = 'register'"
+                >Don't have an account?</a
+              >
             </form>
           </template>
           <!-- End of Password reset email -->
@@ -185,6 +239,11 @@ export default {
       this.userData.name = '';
       this.userData.email = '';
       this.userData.password = '';
+    },
+  },
+  computed: {
+    hasDataChanged() {
+      return this.userData.name.length >= 5 && this.userData.email.length >= 5 && this.userData.password.length >= 5;
     },
   },
 };

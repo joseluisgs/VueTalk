@@ -5,13 +5,13 @@
         Rooms
       </h1>
       <!-- Insertamos el componente con la lista -->
-      <RoomsComponent :unread-messages="unreadMessages" :rooms="rooms" v-if="user"/>
+      <RoomsComponent :unread-messages="unreadMessages" :rooms="roomsByDate" v-if="user"/>
     </div>
   </section>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import RoomsComponent from '../components/RoomsComponent.vue';
 
 export default {
@@ -53,6 +53,7 @@ export default {
     ...mapState('rooms', ['rooms']),
     ...mapState('user', ['user', 'meta']),
     ...mapState('messages', ['messages']),
+    ...mapGetters('rooms', ['roomsByDate']),
     // Creamos una propiedd que muestre los mensajes sin leer
     unreadMessages() {
       return this.messages.filter((message) => (

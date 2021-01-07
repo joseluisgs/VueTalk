@@ -14,6 +14,7 @@
                   v-model.trim="roomData.name"
                   key="room-create-name-input"
                   icon ="chat-processing-outline"
+                  minlength="3"
                 ></b-input>
             </b-field>
 
@@ -25,6 +26,7 @@
                   maxlength="200"
                   v-model.trim="roomData.description"
                   key="room-create-description-input"
+                  minlength="3"
                 ></b-input>
             </b-field>
 
@@ -33,6 +35,7 @@
                 <b-button
                   type="is-link"
                   native-type="submit"
+                  :disabled="!hasDataChanged"
                   :loading ="isLoading"
                   icon-left="chat-plus"
                   >Create
@@ -100,6 +103,11 @@ export default {
      */
     redirect() {
       setTimeout(() => this.$router.push({ name: 'Home' }), 1000);
+    },
+  },
+  computed: {
+    hasDataChanged() {
+      return this.roomData.name.length >= 3 && this.roomData.description.length >= 3;
     },
   },
 };

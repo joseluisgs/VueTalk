@@ -92,7 +92,7 @@ const actions = {
     });
     // Creamos el usuario en la base de datos
     // Podemos meterle todos los campso qque queramos
-    const data = { name, email, created: Date.now() };
+    const data = { name, email, createdAt: Date.now() };
     await User.createUser(user.uid, data);
     commit('setUser', user);
   },
@@ -182,7 +182,7 @@ const actions = {
    * @param {*} param1
    */
   async updateMeta(context, { roomID, exit, uid }) {
-    const ref = Service.usersCollection.doc(uid);
+    const ref = await Service.usersCollection.doc(uid);
     const userDoc = await ref.get();
     // si no existe lo creamos en blanco para qe haya datos en blancos.
     if (!userDoc.exists) await ref.set({});

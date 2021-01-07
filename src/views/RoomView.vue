@@ -103,9 +103,9 @@ export default {
       // Ya no lo hacemos así porque debemos esucharlos siempre para
       // crear notificaciones
       // this.getMessages(this.id);
-
+      // console.log(`Al cargar: --> ${this.room.name}`);
       // Actualizamos los Metadatos, inicando que entramos, se añaden
-      this.updateMeta({
+      await this.updateMeta({
         roomID: this.id,
         exit: false,
         uid: this.userUid,
@@ -128,11 +128,14 @@ export default {
     // this.setMessagesListener(null);
 
     // actualizamos los metadatos del usuario indcando que estamos saliendo, se eliminan
-    this.updateMeta({
-      roomID: this.id,
-      exit: true,
-      uid: this.userUid,
-    });
+    if (this.room != null) {
+      // console.log(`Al salir: --> ${this.room.name}`);
+      this.updateMeta({
+        roomID: this.id,
+        exit: true,
+        uid: this.userUid,
+      });
+    }
   },
 
   methods: {
