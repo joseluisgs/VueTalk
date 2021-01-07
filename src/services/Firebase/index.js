@@ -38,6 +38,7 @@ const roomsCollection = db.collection('vuetalk-rooms');
 // Exportamos lo que necesitemos
 export default {
   // Elementos de firebase
+  firebase, // Para algunas opciones como los metadatos
   db,
   auth,
   storage,

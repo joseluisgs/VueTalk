@@ -45,7 +45,7 @@ const actions = {
     const htmlElement = document.documentElement;
     const theme = localStorage.getItem('theme');
     htmlElement.setAttribute('theme', theme);
-    console.log(theme);
+    // console.log(theme);
     commit('changeTheme', theme);
     if (theme === 'dark') {
       return true;

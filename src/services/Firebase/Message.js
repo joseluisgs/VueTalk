@@ -6,13 +6,14 @@ export default {
    * @param {*} message Dato del mensaje
    */
   async createMessage({
-    roomID, userId, userName, message,
+    roomId, userId, userName, message,
   }) {
-    return Service.roomsCollection.doc(roomID).collection('messages')
+    return Service.roomsCollection.doc(roomId).collection('messages')
       .add({
         userId,
         userName,
         message,
+        roomId,
         createdAt: Date.now(),
       });
   },

@@ -37,4 +37,12 @@ export default {
   async createUser(id, data) {
     return Service.usersCollection.doc(id).set(data, { merge: true });
   },
+
+  /**
+   * Devuelve un usuario dado su id
+   * @param {*} id
+   */
+  async getUser(id) {
+    return Service.usersCollection.doc(id).get();
+  },
 };

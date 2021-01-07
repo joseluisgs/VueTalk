@@ -5,7 +5,7 @@
         Rooms
       </h1>
       <!-- Insertamos el componente con la lista -->
-      <RoomsComponent :rooms="rooms" v-if="user"/>
+      <RoomsComponent :unread-messages="unreadMessages" :rooms="rooms" v-if="user"/>
     </div>
   </section>
 </template>
@@ -51,7 +51,18 @@ export default {
   // Metodos computados
   computed: {
     ...mapState('rooms', ['rooms']),
-    ...mapState('user', ['user']),
+    ...mapState('user', ['user', 'meta']),
+    ...mapState('messages', ['messages']),
+    // Creamos una propiedd que muestre los mensajes sin leer
+    unreadMessages() {
+      return this.messages.filter((message) => (
+        // Debe existir meta
+        // User participated, es decir existe ese indice
+        this.meta.joined && this.meta.joined[message.roomId]
+          // Message sent after user last connection y su valor es menor
+          && this.meta.joined[message.roomId] < message.createdAt
+      ));
+    },
   },
 };
 </script>

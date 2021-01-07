@@ -40,10 +40,10 @@ const actions = {
   /**
    * Obtiene los mensajes de una sala en tiempo real y nos desuscribimos de ellos
    * @param {state} commit
-   * @param {string} roomID
    */
-  async getMessages({ commit }, roomID) {
-    const query = Service.roomsCollection.doc(roomID).collection('messages')
+  async getMessages({ commit }) {
+    // Nos traemos todos los mensajes
+    const query = Service.db.collectionGroup('messages')
       .orderBy('createdAt', 'desc')
       .onSnapshot(((querySnapshot) => {
         // Aceptamos y nos ssuscribimos a los cambios
@@ -69,9 +69,9 @@ const actions = {
   async messageCreate({ rootState }, { roomID, message }) {
     return Message.createMessage(
       {
-        roomID,
         userId: rootState.user.user.uid,
         userName: rootState.user.user.displayName,
+        roomId: roomID,
         message,
         createdAt: Date.now(),
       },

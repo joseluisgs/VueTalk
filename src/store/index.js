@@ -38,19 +38,34 @@ const store = new Vuex.Store({
      * @param {state} state
      */
     checkAuth({ dispatch, commit }) {
-      Service.auth.onAuthStateChanged((user) => {
+      Service.auth.onAuthStateChanged(async (user) => {
         // Actualizamos el estado que está en el módulo de usuario
         // y las salas (síncrono, por eso es dispach al traernos por internet)
         if (user) {
+          // usuario
           commit('user/setUser', user);
+          try {
+            await dispatch('user/getMeta');
+            await dispatch('rooms/getRooms');
+            await dispatch('messages/getMessages');
+          } catch (error) {
+            console.error(error.message);
+            dispatch('utils/toast', { message: error.message, type: 'is-danger' });
+          }
           dispatch('rooms/getRooms');
         } else {
           // Cuando no hay autentificación desactivamos los listeners y quitamos los datos
-          commit('user/setUser', null);
+          // Metadatos
+          commit('user/setMeta', {});
+          commit('user/setUserListener', () => { });
+          // Salas
           commit('rooms/setRooms', []);
           commit('rooms/setRoomsListener', () => { });
+          // Mensajes
           commit('messages/setMessages', []);
           commit('messages/setMessagesListener', () => { });
+          // usuario
+          commit('user/setUser', null);
         }
       });
     },

@@ -9,7 +9,7 @@
             <div class="messages content" ref="messages">
               <!-- Si el mensaje es nuestro lo ponemos de otro color -->
               <div
-                v-for="message in messages"
+                v-for="message in roomMesseges"
                 :key="message.id"
                 class="message"
                 :class="{
@@ -77,6 +77,7 @@ export default {
     isLoading: false,
     message: '',
     room: null,
+    userUid: '',
   }),
 
   // Mis propiedades
@@ -93,11 +94,22 @@ export default {
    * ya sea en mi estado Vuex, o en firebase
    */
   async created() {
+    this.userUid = this.getUserUid;
+    // console.log(this.userUid);
     try {
       // Grab from local state
       this.room = await this.getRoomByID(this.id);
       // Una vez tenemos la sala nos traemos los mensajes del id que tenemos como prop
-      this.getMessages(this.id);
+      // Ya no lo hacemos así porque debemos esucharlos siempre para
+      // crear notificaciones
+      // this.getMessages(this.id);
+
+      // Actualizamos los Metadatos, inicando que entramos, se añaden
+      this.updateMeta({
+        roomID: this.id,
+        exit: false,
+        uid: this.userUid,
+      });
     } catch (error) {
       console.error(error.message);
       this.toast({ message: error.message, type: 'is-danger' });
@@ -112,15 +124,24 @@ export default {
    * suscrito
    */
   destroyed() {
-    this.setMessagesListener(null);
+    // Eliminamos la lógica de no esuchar mensajes.
+    // this.setMessagesListener(null);
+
+    // actualizamos los metadatos del usuario indcando que estamos saliendo, se eliminan
+    this.updateMeta({
+      roomID: this.id,
+      exit: true,
+      uid: this.userUid,
+    });
   },
 
   methods: {
     // De vuex
     ...mapMutations('messages', ['setMessagesListener']),
-    ...mapActions('messages', ['getMessages', 'messageCreate']),
+    ...mapActions('messages', ['messageCreate']),
     ...mapActions('rooms', ['getRoomByID']),
     ...mapActions('utils', ['toast']),
+    ...mapActions('user', ['updateMeta']),
 
     // Mis métodos
     async createMessage() {
@@ -183,6 +204,10 @@ export default {
     ...mapGetters('user', ['getUserUid']),
     ...mapGetters('rooms', ['getRoom']),
     ...mapState('messages', ['messages']),
+    // Las computed no pueden ser arrow functions
+    roomMesseges() {
+      return this.messages.filter((message) => message.roomId === this.id);
+    },
   },
 };
 </script>
