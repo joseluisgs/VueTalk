@@ -6,10 +6,18 @@
 // https://developer.mozilla.org/es/docs/Web/CSS/Using_CSS_custom_properties
 @import 'theme-colors';
 
+$animate_theme: 1s;
+
 html {
   overflow: scroll; // Saco la barra de scroll
   overflow-x: hidden; // Escondo la barra horizontal
   background-color: var(--app-background-color);
+  transition: background-color $animate_theme;
+}
+
+body {
+    background: var(--app-background-color);
+    transition: background $animate_theme;
 }
 
 // Instancia de de VUE
@@ -32,6 +40,7 @@ label.label {
 .card {
   background-color: var(--app-background-secoundary-color);
   color: var(--dynamic-title-color);
+  transition: background-color $animate_theme;
 }
 
 
