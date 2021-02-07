@@ -110,12 +110,14 @@ const actions = {
   /**
    * Crea una habitacion
    * @param {state} estado raíz, el padre para acceder a otros
-   * @param {*} nombre y descripción de la sala
+   * @param {*} nombre, descripción, magen e id de la sala
    */
-  async roomsCreate({ rootState }, { name, description }) {
+  async roomsCreate({ rootState }, {
+    name, description, image, roomID,
+  }) {
     const { uid, displayName } = rootState.user.user;
     Rooms.createRoom({
-      name, description, uid, displayName,
+      name, description, image, roomID, uid, displayName,
     });
   },
 
@@ -233,6 +235,39 @@ const actions = {
       await room.delete();
     } else {
       throw new Error('User is not admin of this room');
+    }
+  },
+
+  /**
+   * Devuelve el ID de un nuevo documento
+   */
+  async getNewRoomId() {
+    return Rooms.getNewId();
+  },
+
+  /**
+   * Sube una imagen al storage
+   * @param {*} context
+   * @param {*} elementos a lamcenar
+   */
+  async uploadRoomImage(context, { roomID, file }) {
+    // Función que sube la foto
+    const uploadPhoto = () => {
+      // Creamos el nombre y path del fichero
+      const fileName = `${roomID}/${roomID}-image.jpg`;
+      const fileRef = Service.roomsStorage.child(fileName);
+      return fileRef.put(file);
+    };
+
+    // Obtenemos la url
+    const fileURL = (ref) => ref.getDownloadURL();
+
+    // Método a usar para subir la imagen y obtener su URL
+    try {
+      const upload = await uploadPhoto();
+      return await fileURL(upload.ref);
+    } catch (error) {
+      throw Error(error.message);
     }
   },
 

@@ -19,7 +19,7 @@ const defaultProject = firebase.initializeApp(firebaseConfig);
 // Elementos de Firebase a usar (Cargamos los que vayamos a usar)
 const db = firebase.firestore(); // Base de datos en tiempo real
 const auth = firebase.auth(); // Autenticación
-const storage = firebase.storage(); // Almacenamiento
+const storage = firebase.storage().ref(); // Almacenamiento
 
 // Métodos de autentificación. Autenticación de Google, poner uno por método de identificación. Se debe eactivar en la consola de Firebase
 const providerGoogle = new firebase.auth.GoogleAuthProvider();
@@ -34,6 +34,9 @@ const roomsCollection = db.collection('vuetalk-rooms');
 
 // imprimimos el nombre del proyecto, esto espor depurar, luego quitar si se quiere
 // console.log(`⚑ Firebase -> ${defaultProject.name} ✓`);
+
+// Creamos los directorios para almacenar las constants
+const roomsStorage = storage.child('vuetalk').child('rooms');
 
 // Exportamos lo que necesitemos
 export default {
@@ -50,5 +53,7 @@ export default {
   // Collecciones
   usersCollection,
   roomsCollection,
-  // likesCollection,
+  // Almacenamiento
+  roomsStorage,
+
 };
