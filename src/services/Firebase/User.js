@@ -1,3 +1,5 @@
+import Service from '.';
+
 export default {
 
   /**
@@ -25,5 +27,22 @@ export default {
    */
   async updatePassword(user, password) {
     await user.updatePassword(password);
+  },
+
+  /**
+   * crea un usuario en la base de datos
+   * @param {string} id
+   * @param {any} data
+   */
+  async createUser(id, data) {
+    return Service.usersCollection.doc(id).set(data, { merge: true });
+  },
+
+  /**
+   * Devuelve un usuario dado su id
+   * @param {*} id
+   */
+  async getUser(id) {
+    return Service.usersCollection.doc(id).get();
   },
 };

@@ -7,47 +7,34 @@
             <h1 class="title has-text-centered">User's Profile</h1>
             <form v-if="user" @submit.prevent="updateProfile">
               <b-field label="Name" position="is-left">
-                 <p class="control has-icons-left has-icons-right">
                   <b-input
                     :placeholder="user.displayName"
                     type="text"
                     v-model.trim="userData.name"
+                    icon="account"
                     key="username-input">
                   </b-input>
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </p>
               </b-field>
               <b-field label="Email" position="is-left">
-                 <p class="control has-icons-left has-icons-right">
                   <b-input
                     :placeholder="user.email"
                     type="email"
+                    icon ="email"
                     v-model.trim="userData.email" key="usermail-input">
                   </b-input>
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-envelope-o"></i>
-                  </span>
-                </p>
               </b-field>
               <b-field label="Password" position="is-left">
-                 <p class="control has-icons-left has-icons-right">
                   <b-input
-                    type="password" icon="password" v-model.trim="userData.password" key="userpassword-input"></b-input>
-                  <span class="icon is-small is-left">
-                    <i class="fa fa-lock"></i>
-                  </span>
-                </p>
+                    type="password" icon="lock" v-model.trim="userData.password" key="userpassword-input"></b-input>
               </b-field>
-              <div class="field is-grouped has-text-righ">
+              <div class="field is-grouped has-text-right">
                 <div class="buttons">
                   <b-button
-                    tag="input"
                     type="is-link"
                     native-type="submit"
                     :disabled="!hasDataChanged"
-                    :class="{ 'is-loading': isLoading }"
+                    :loading="isLoading"
+                    icon-left="pencil"
                   >Actualizar
                   </b-button>
                   <!-- <b-button type="is-danger" @click="loginGoogle" outlined>Google</b-button> -->
@@ -78,6 +65,7 @@ export default {
   methods: {
     // Metodos de Vuex
     ...mapActions('user', ['profileUpdate']),
+    ...mapActions('utils', ['toast']),
 
     /**
      * Actualiza el perfil del usuario
@@ -90,10 +78,10 @@ export default {
           email: this.userData.email,
           password: this.userData.password,
         });
-        this.$toast.success('Account data updated');
+        this.toast({ message: 'Account data updated', type: 'is-success' });
         this.resetData();
       } catch (error) {
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
         console.error(error.message);
       } finally {
         this.isLoading = false;

@@ -1,4 +1,4 @@
-import Service from '.';
+import Service from './index';
 
 // Recurso
 const Auth = Service.auth;
@@ -11,7 +11,7 @@ export default {
    * @returns {user} Objeto User Google Auth
    */
   async getActiveUser() {
-    return Service.auth.currentUser;
+    return Auth.currentUser;
   },
 
   /**
