@@ -249,17 +249,20 @@ export default {
   left: 0;
   width: 100%;
   height: 12rem;
+  margin-bottom: 1rem;
 }
 .form {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 16rem;
   & > *:first-child {
     flex-grow: 1;
     margin-right: 1rem;
   }
 }
 .textarea.form__textarea {
-  min-height: 4rem;
+  min-height: 2rem;
 }
+
 </style>
