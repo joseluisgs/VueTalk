@@ -19,7 +19,7 @@
             <div class="card-image">
               <figure class="image is-16by9">
                 <img
-                  src="https://bulma.io/images/placeholders/1280x960.png"
+                  :src="roomImage(`${room.id}`)"
                   alt="Placeholder image"
                 />
               </figure>
@@ -71,6 +71,10 @@ export default {
     },
   },
 
+  created() {
+    console.log(this.roomImage('uKJPnohpJLHKf1awLN6a'));
+  },
+
   // Mis metodos
   methods: {
     hasUnreadMessages(roomId) {
@@ -83,6 +87,7 @@ export default {
     // Nos traemos el estado
     ...mapState(['isLoading']),
     ...mapGetters('user', ['getUserUid']), // cuidado que es un vector
+    ...mapGetters('rooms', ['roomImage']),
   },
 };
 </script>

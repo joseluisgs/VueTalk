@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable global-require */
 /* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
@@ -29,6 +31,13 @@ const getters = {
    * @param {*} state
    */
   roomsByDate: (state) => state.rooms.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+
+  // Devuelve la imagen de una sala
+  roomImage: (state) => (id) => {
+    const room = state.rooms.find((room) => room.id === id);
+    return room.image ? room.image : require('@/assets/img/chat-room.png');
+  },
+
 };
 
 const mutations = {
