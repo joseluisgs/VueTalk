@@ -16,12 +16,20 @@
                   'message--own': message.userId === getUserUid,
                 }"
               >
+                <!-- Message has photo -->
+                <div
+                  v-if="message.photo"
+                  class="message__photo"
+                  :style="{ 'background-image': `url(${message.photo})` }"
+                ></div>
                 <p class="message__text">
                   {{ message.message }}
                   <span>
                     <br />
                     <small class="message__time">
-                      <i v-if="message.userId !== getUserUid">{{ message.userName }}</i>
+                      <i v-if="message.userId !== getUserUid">{{
+                        message.userName
+                      }}</i>
                       <i v-else>Me</i>
                       <i>: {{ message.createdAt | timeAgo }} ago</i>
                     </small>
@@ -43,6 +51,32 @@
           v-model.trim="message"
           key="message-create-input"
         ></b-input>
+
+        <!-- Imagen adjunta -->
+        <!-- Preview de foto -->
+        <div
+          v-if="photo"
+          @click="photo = null"
+          class="photo-preview"
+          :style="{ 'background-image': `url(${messagePhoto})` }"
+        ></div>
+        <!-- Upload foto -->
+        <div class="control mr-1">
+          <b-field class="file is-primary">
+            <b-upload
+              v-model="photo"
+              class="file-label"
+              accept="image/jpeg, image/png, image/gif"
+              :class="{ 'is-loading': isLoading }"
+            >
+              <span class="file-cta">
+                <b-icon icon="file-upload"></b-icon>
+                <!-- <span class="file-label">🌄</span> -->
+              </span>
+            </b-upload>
+          </b-field>
+        </div>
+        <!-- Enviar -->
         <div class="buttons">
           <b-button
             :disabled="!message"
@@ -78,6 +112,8 @@ export default {
     message: '',
     room: null,
     userUid: '',
+    photo: null,
+    fileURL: null,
   }),
 
   // Mis propiedades
@@ -141,7 +177,7 @@ export default {
   methods: {
     // De vuex
     ...mapMutations('messages', ['setMessagesListener']),
-    ...mapActions('messages', ['messageCreate']),
+    ...mapActions('messages', ['messageCreate', 'uploadMessageImage']),
     ...mapActions('rooms', ['getRoomByID']),
     ...mapActions('utils', ['toast']),
     ...mapActions('user', ['updateMeta']),
@@ -150,9 +186,15 @@ export default {
     async createMessage() {
       this.isLoading = true;
       try {
+        // Subimos la imagen si la hay
+        if (this.photo) {
+          this.fileURL = await this.uploadMessageImage({ roomID: this.id, file: this.photo });
+        }
+        // Creamos el mensaje
         await this.messageCreate({
           roomID: this.id,
           message: this.message,
+          photo: this.fileURL,
         });
         this.scrollDown();
         this.clearData();
@@ -187,6 +229,8 @@ export default {
      */
     clearData() {
       this.message = '';
+      this.photo = null;
+      this.fileURL = null;
     },
   },
 
@@ -210,6 +254,11 @@ export default {
     // Las computed no pueden ser arrow functions
     roomMesseges() {
       return this.messages.filter((message) => message.roomId === this.id);
+    },
+
+    // Devuelve la imagen de la photo
+    messagePhoto() {
+      return URL.createObjectURL(this.photo);
     },
   },
 };
@@ -237,8 +286,13 @@ export default {
     color: gray;
     font-size: 12px;
   }
+  &__photo {
+    height: 20vmax;
+    background-size: cover;
+    background-position: center;
+  }
   &__text {
-    color: rgb(61, 61, 61)
+    color: rgb(61, 61, 61);
   }
 }
 .send {
@@ -250,6 +304,16 @@ export default {
   width: 100%;
   height: 12rem;
   margin-bottom: 1rem;
+  .photo-preview {
+    width: 5rem;
+    height: 5rem;
+    border: 1px solid;
+    background-position: center;
+    background-size: cover;
+    margin-right: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
 }
 .form {
   display: flex;
@@ -264,5 +328,4 @@ export default {
 .textarea.form__textarea {
   min-height: 2rem;
 }
-
 </style>

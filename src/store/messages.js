@@ -3,6 +3,7 @@
 
 import Service from '../services/Firebase/index';
 import Message from '../services/Firebase/Message';
+import Storage from '../services/Firebase/Storage';
 
 // Modelos de mensajes
 const state = {
@@ -66,16 +67,28 @@ const actions = {
    * @param {rootState} rootState
    * @param {message} message
    */
-  async messageCreate({ rootState }, { roomID, message }) {
+  async messageCreate({ rootState }, { roomID, message, photo }) {
     return Message.createMessage(
       {
         userId: rootState.user.user.uid,
         userName: rootState.user.user.displayName,
         roomId: roomID,
         message,
+        photo,
         createdAt: Date.now(),
       },
     );
+  },
+
+  /**
+   * Sube una imagen al storage
+   * @param {*} context
+   * @param {*} elementos a lamcenar
+   */
+  async uploadMessageImage({ rootGetters }, { roomID, file }) {
+    // Obtenemos el UID del usuario usando su getter
+    const userUID = rootGetters['user/getUserUid'];
+    return Storage.uploadMessageImage(roomID, userUID, file);
   },
 };
 

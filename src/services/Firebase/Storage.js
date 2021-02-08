@@ -52,4 +52,31 @@ export default {
     }
   },
 
+  /**
+   * Sube ficheros de mensajes sociados  una sala
+   * @param {*} roomID
+   * @param {*} file
+   */
+  async uploadMessageImage(roomID, userUID, file) {
+    // Función que sube el fichero
+    const timestamp = Date.now();
+    const uploadFile = () => {
+      // Creamos el nombre y path del fichero
+      const fileName = `${roomID}/messages/${userUID}-${timestamp}.jpg`;
+      const fileRef = roomsStorage.child(fileName);
+      return fileRef.put(file);
+    };
+
+    // Obtenemos la url
+    const fileURL = (ref) => ref.getDownloadURL();
+
+    // Método a usar para subir la imagen y obtener su URL
+    try {
+      const upload = await uploadFile();
+      return await fileURL(upload.ref);
+    } catch (error) {
+      throw Error(error.message);
+    }
+  },
+
 };
