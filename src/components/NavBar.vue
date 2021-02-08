@@ -46,14 +46,16 @@
           </template>
         </div>
       </b-navbar-item>
+      <b-navbar-item>
       <b-switch v-model="darkMode" passive-type="is-warning" type="is-dark">
-        <span v-if="darkMode === true">
+        <span v-if="darkMode === true" class="is-flex is-align-content-center">
           <img alt="logo" src="../assets/img/moon.png" width="25" />
         </span>
-        <span v-else>
+        <span v-else class="is-flex is-align-content-center">
           <img alt="logo" src="../assets/img/sun.png" width="25" />
         </span>
       </b-switch>
+      </b-navbar-item>
     </template>
   </b-navbar>
 </template>

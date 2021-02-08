@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    <div class="container">
+    <div class="container mb-5">
       <h1 class="title has-text-centered">
         Rooms
       </h1>
