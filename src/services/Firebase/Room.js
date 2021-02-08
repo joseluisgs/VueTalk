@@ -30,10 +30,13 @@ export default {
    * Actualiza los datos de una sala
    * @param {room} room data
    */
-  async updateRoom({ roomID, name, description }) {
+  async updateRoom({
+    roomID, name, description, image,
+  }) {
     const roomData = {};
     if (name) roomData.name = name;
     if (description) roomData.description = description;
+    roomData.image = image;
     return Service.roomsCollection.doc(roomID).update(roomData);
   },
 

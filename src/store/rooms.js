@@ -200,8 +200,12 @@ const actions = {
    * @param {context} context
    * @param {room} room data
    */
-  async roomUpdate(context, { roomID, name, description }) {
-    return Rooms.updateRoom({ roomID, name, description });
+  async roomUpdate(context, {
+    roomID, name, description, image,
+  }) {
+    return Rooms.updateRoom({
+      roomID, name, description, image,
+    });
   },
 
   /**
