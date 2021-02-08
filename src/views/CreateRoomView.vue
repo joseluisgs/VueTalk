@@ -30,39 +30,29 @@
               ></b-input>
             </b-field>
 
-            <div class="field is-grouped has-text-right">
-              <div class="buttons">
-                <b-button
-                  type="is-link"
-                  native-type="submit"
-                  :disabled="!hasDataChanged"
-                  :loading="isLoading"
-                  icon-left="chat-plus"
-                  >Create
-                </b-button>
-              </div>
-            </div>
             <!-- Fichero -->
             <label class="label">Image</label>
-              <div
-                class="room__image"
-                :style="{
-                  'background-image': `url(${roomImage})`
-                }"
-              >
+            <div
+              class="room__image"
+              :style="{
+                'background-image': `url(${roomImage})`,
+              }"
+            >
               <!-- Para borrar la imagen -->
               <a
-                    href="#"
-                    v-if="image"
-                    @click.prevent="image = roomData.imageURL = null"
-                    class="is-pulled-right button is-small is-danger is-outlined"
-                    >X</a
-                  >
-              </div>
+                href="#"
+                v-if="image"
+                @click.prevent="image = roomData.imageURL = null"
+                class="is-pulled-right button is-small is-danger is-outlined"
+                >X</a
+              >
+            </div>
             <b-field class="file is-primary" :class="{ 'has-name': !!image }">
-              <b-upload v-model="image"
+              <b-upload
+                v-model="image"
                 accept="image/jpeg, image/png, image/gif"
-                class="file-label">
+                class="file-label"
+              >
                 <span class="file-cta">
                   <b-icon class="file-icon" icon="upload"></b-icon>
                   <span class="file-label">Choose a image</span>
@@ -72,6 +62,17 @@
                 </span>
               </b-upload>
             </b-field>
+            <!-- Enviar  -->
+            <div class="field has-text-right">
+                <b-button
+                  type="is-link"
+                  native-type="submit"
+                  :disabled="!hasDataChanged"
+                  :loading="isLoading"
+                  icon-left="chat-plus"
+                  >Create
+                </b-button>
+            </div>
           </form>
         </div>
       </div>

@@ -40,7 +40,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  box-shadow: -1px -1px 5px lightgray;
+  box-shadow: -0px -2px 3px rgb(190, 190, 190);
   background-color: whitesmoke;
   // Parrafo del footer
 }

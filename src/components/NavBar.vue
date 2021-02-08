@@ -1,5 +1,5 @@
 <template>
-  <b-navbar type="is-primary" shadow fixed-top>
+  <b-navbar type="is-primary" fixed-top>
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
         <img
@@ -122,5 +122,9 @@ export default {
 .navbar__logo {
   width: 200px;
   height: auto;
+}
+
+.navbar {
+  box-shadow: 0px 2px 3px  rgb(190, 190, 190);
 }
 </style>
