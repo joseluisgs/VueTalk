@@ -71,10 +71,6 @@ export default {
     },
   },
 
-  created() {
-    console.log(this.roomImage('uKJPnohpJLHKf1awLN6a'));
-  },
-
   // Mis metodos
   methods: {
     hasUnreadMessages(roomId) {

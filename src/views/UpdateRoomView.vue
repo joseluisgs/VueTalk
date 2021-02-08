@@ -139,7 +139,7 @@ export default {
   // Mis métodos
   methods: {
     // De vuex
-    ...mapActions('rooms', ['roomUpdate', 'getRoomByID', 'roomRemove', 'uploadRoomImage']),
+    ...mapActions('rooms', ['roomUpdate', 'getRoomByID', 'roomRemove', 'uploadRoomImage', 'removeRoomImages']),
     ...mapActions('utils', ['toast', 'confirm']),
     // Míos
     /**
@@ -185,6 +185,9 @@ export default {
           type: 'is-danger',
         });
         if (res) {
+          // Borramos las imagenes contenidas
+          await this.removeRoomImages(this.id);
+          // Borramos los datos de la sala y sus mensajes
           await this.roomRemove(this.id);
           this.toast({ message: 'Room removed', type: 'is-success' });
           this.redirect();

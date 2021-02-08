@@ -168,7 +168,7 @@ const actions = {
             roomData: change.doc.data(),
             id: change.doc.id,
           });
-        // El cambio es actualizar un elemento: sala
+          // El cambio es actualizar un elemento: sala
         } else if (change.type === 'modified') {
           console.log('Change --> modified');
           commit('updateRoom', {
@@ -176,7 +176,7 @@ const actions = {
             roomData: change.doc.data(),
             id: change.doc.id,
           });
-        // El cambio es eliminar un elemento: sala
+          // El cambio es eliminar un elemento: sala
         } else if (change.type === 'removed') {
           console.log('Change --> removed');
           commit('removeRoom', change.doc.id);
@@ -266,6 +266,15 @@ const actions = {
    */
   async uploadRoomImage(context, { roomID, file }) {
     return Storage.uploadRoomImage(roomID, file);
+  },
+
+  /**
+   * Elimina todas las imagenes de la sala
+   * @param {*} context
+   * @param {*} param1
+   */
+  async removeRoomImages(context, roomID) {
+    return Storage.removeRoomImages(roomID);
   },
 
 };

@@ -31,4 +31,25 @@ export default {
     }
   },
 
+  /**
+   * Elimina todas las imagenes de una sala
+   * @param {*} roomID
+   */
+  async removeRoomImages(roomID) {
+    // Borramos todo lo que tiene la sala contenido
+    try {
+      const dirRef = roomsStorage.child(roomID);
+      // Obtenemos la lista
+      const files = await dirRef.list();
+      files.items.forEach((fileRef) => {
+        // Lo borramos
+        fileRef.delete();
+      });
+      // throw Error('Prueba');
+      // dirRef.delete();
+    } catch (error) {
+      throw Error(error.message);
+    }
+  },
+
 };
