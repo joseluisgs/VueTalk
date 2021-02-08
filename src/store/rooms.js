@@ -6,6 +6,7 @@
 
 import Rooms from '../services/Firebase/Room';
 import Service from '../services/Firebase/index';
+import Storage from '../services/Firebase/Storage';
 
 /**
  * Estado para Salas
@@ -260,24 +261,7 @@ const actions = {
    * @param {*} elementos a lamcenar
    */
   async uploadRoomImage(context, { roomID, file }) {
-    // Función que sube la foto
-    const uploadPhoto = () => {
-      // Creamos el nombre y path del fichero
-      const fileName = `${roomID}/${roomID}-image.jpg`;
-      const fileRef = Service.roomsStorage.child(fileName);
-      return fileRef.put(file);
-    };
-
-    // Obtenemos la url
-    const fileURL = (ref) => ref.getDownloadURL();
-
-    // Método a usar para subir la imagen y obtener su URL
-    try {
-      const upload = await uploadPhoto();
-      return await fileURL(upload.ref);
-    } catch (error) {
-      throw Error(error.message);
-    }
+    return Storage.uploadRoomImage(roomID, file);
   },
 
 };
