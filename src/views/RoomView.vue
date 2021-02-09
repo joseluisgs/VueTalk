@@ -290,6 +290,8 @@ export default {
     height: 20vmax;
     background-size: cover;
     background-position: center;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
   }
   &__text {
     color: rgb(61, 61, 61);
@@ -299,11 +301,12 @@ export default {
   background-color: lightgray;
   padding: 1rem;
   position: fixed;
-  bottom: 0;
+  bottom: 2.4rem;
   left: 0;
   width: 100%;
   height: 12rem;
-  margin-bottom: 1rem;
+  box-shadow: -0px -2px 3px rgb(190, 190, 190);
+
   .photo-preview {
     width: 5rem;
     height: 5rem;
@@ -317,9 +320,7 @@ export default {
 }
 .form {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-bottom: 16rem;
   & > *:first-child {
     flex-grow: 1;
     margin-right: 1rem;

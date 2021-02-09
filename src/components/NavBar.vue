@@ -21,7 +21,7 @@
         <b-navbar-item tag="router-link" :to="{ name: 'About' }" href="#">
           About
         </b-navbar-item>
-        <b-navbar-item href="https://twitter.com/joseluisgonsan">
+        <b-navbar-item href="https://twitter.com/joseluisgonsan" target="_blank">
           Contact
         </b-navbar-item>
       </b-navbar-dropdown>

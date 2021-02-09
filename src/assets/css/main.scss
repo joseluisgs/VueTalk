@@ -74,6 +74,18 @@ label.label {
   transition: background-color $animate_theme;
 }
 
+.footer {
+  padding: 0.8rem 0.8rem 0.6rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: -0px -2px 3px rgb(190, 190, 190);
+  background-color: var(--dynamic-background-footer);
+  color: var(--dynamic-title-color);
+  transition: background-color $animate_theme;
+  // Parrafo del footer
+}
+
 // Elementos propios que aparecerán como clases
 .app-background {
   background-color: var(--app-background-color);
