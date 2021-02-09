@@ -100,6 +100,8 @@ import {
   mapState, mapGetters, mapActions, mapMutations,
 } from 'vuex';
 
+import FilterModal from '../components/FilterModalComponent.vue';
+
 // Librería de tiempo y su plugin de tiempo relativo
 const dayjs = require('dayjs');
 const relativeTime = require('dayjs/plugin/relativeTime');
@@ -183,7 +185,7 @@ export default {
     ...mapMutations('messages', ['setMessagesListener']),
     ...mapActions('messages', ['messageCreate', 'uploadMessageImage']),
     ...mapActions('rooms', ['getRoomByID']),
-    ...mapActions('utils', ['toast', 'requestConfirmation']),
+    ...mapActions('utils', ['toast', 'modal', 'requestConfirmation']),
     ...mapActions('user', ['updateMeta']),
 
     // Mis métodos
@@ -244,7 +246,7 @@ export default {
      */
     async onFileChange() {
       try {
-        this.filter = await this.requestConfirmation({
+        /* this.filter = await this.requestConfirmation({
           props: {
             message: 'Select your filter for your photo',
             title: 'Choose filter',
@@ -252,6 +254,23 @@ export default {
             filters: this.filters,
           },
           component: 'FilterModal',
+        }); */
+        this.modal({
+          component: FilterModal,
+          parent: this,
+          hasModalCard: true,
+          props: {
+            message: 'Select your filter for your photo',
+            title: 'Choose filter',
+            file: this.messagePhoto,
+            filters: this.filters,
+          },
+          events: {
+            confirm: (value) => {
+              this.filter = value;
+              console.log(this.filter);
+            },
+          },
         });
       } catch (error) {
         // console.error(error.message);
@@ -316,7 +335,7 @@ export default {
     height: 20vmax;
     background-size: cover;
     background-position: center;
-    border-radius: 1rem;
+    // border-radius: 0.25rem;
     margin-bottom: 1rem;
   }
   &__text {
@@ -339,7 +358,7 @@ export default {
     background-position: center;
     background-size: cover;
     margin-right: 1rem;
-    border-radius: 0.25rem;
+    // border-radius: 0.25rem;
     cursor: pointer;
   }
 }

@@ -6,9 +6,9 @@
 // https://buefy.org/documentation/toast/
 // https://buefy.org/documentation/dialog
 
-import Vue from 'vue';
+// import Vue from 'vue';
 
-import { ToastProgrammatic as Toast, DialogProgrammatic as Dialog } from 'buefy';
+import { ToastProgrammatic as Toast, DialogProgrammatic as Dialog, ModalProgrammatic as Modal } from 'buefy';
 
 // Estado
 const state = {
@@ -88,9 +88,25 @@ const actions = {
   },
 
   /**
-   * Mensaje de confirmción en base a un componente
+   * Abre un modal renderizando el componente que lleva dentro e interactuamos con su evento
    */
-  requestConfirmation(context, { props, component }) {
+  modal(context, {
+    component, parent, props, events,
+  }) {
+    Modal.open({
+      component,
+      parent,
+      hasModalCard: true,
+      props,
+      events,
+    });
+  },
+
+  /**
+   * Mensaje de confirmción en base a un componente
+   * Lo guardo por si me hace falta
+   */
+  /* requestConfirmation(context, { props, component }) {
     const Component = () => import(`../components/${component}Component.vue`);
     return new Promise((resolve, reject) => {
       const dialog = new Vue({
@@ -117,7 +133,7 @@ const actions = {
       }).$mount();
       document.getElementById('app').appendChild(dialog.$el);
     });
-  },
+  }, */
 
 };
 

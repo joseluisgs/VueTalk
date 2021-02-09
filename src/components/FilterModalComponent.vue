@@ -4,7 +4,7 @@
     <div class="modal-card">
       <header class="modal-card-head">
       <p class="modal-card-title">{{ title }}</p>
-      <button class="delete" aria-label="close" @click="$emit('cancel')"></button>
+      <button class="delete" aria-label="close" @click="$emit('close')"></button>
     </header>
       <section class="modal-card-body">
         <h3 class="subtitle has-text-centered is-size-4 is-marginless">
@@ -37,10 +37,10 @@
       </section>
       <footer class="modal-card-foot buttons is-right">
         <!-- Botones que emiten la acción y devuelve el filtro seleccionado  -->
-        <b-button @click="$emit('confirm', activeFilter)" :class="actionClass">
+        <b-button @click="confirm()" :class="actionClass">
           Confirm
         </b-button>
-        <b-button @click="$emit('cancel')"> Cancel </b-button>
+        <b-button @click="$emit('close')"> Cancel </b-button>
       </footer>
     </div>
   </div>
@@ -77,12 +77,20 @@ export default {
   data: () => ({
     activeFilter: 'normal',
   }),
+  methods: {
+    confirm() {
+      this.$emit('confirm', this.activeFilter);
+      this.$parent.close();
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .modal {
-  display: block;
+ display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .photo {
   padding: 0.5rem;
@@ -104,9 +112,9 @@ export default {
       border: 3px solid orange;
     }
     &__image {
-      width: 20vmax;
+      width: 10vmax;
       height: auto;
-      max-width: 20vmax;
+      max-width: 10vmax;
       display: block;
     }
     &__name {
