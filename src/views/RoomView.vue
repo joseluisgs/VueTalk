@@ -20,6 +20,7 @@
                 <div
                   v-if="message.photo"
                   class="message__photo"
+                  :class="message.filter"
                   :style="{ 'background-image': `url(${message.photo})` }"
                 ></div>
                 <p class="message__text">
@@ -57,6 +58,7 @@
         <div
           v-if="photo"
           @click="photo = null"
+          :class="filter"
           class="photo-preview"
           :style="{ 'background-image': `url(${messagePhoto})` }"
         ></div>
@@ -68,6 +70,7 @@
               class="file-label"
               accept="image/jpeg, image/png, image/gif"
               :class="{ 'is-loading': isLoading }"
+              @input="onFileChange"
             >
               <span class="file-cta">
                 <b-icon icon="file-upload"></b-icon>
@@ -114,6 +117,7 @@ export default {
     userUid: '',
     photo: null,
     fileURL: null,
+    filter: null,
   }),
 
   // Mis propiedades
@@ -179,7 +183,7 @@ export default {
     ...mapMutations('messages', ['setMessagesListener']),
     ...mapActions('messages', ['messageCreate', 'uploadMessageImage']),
     ...mapActions('rooms', ['getRoomByID']),
-    ...mapActions('utils', ['toast']),
+    ...mapActions('utils', ['toast', 'requestConfirmation']),
     ...mapActions('user', ['updateMeta']),
 
     // Mis métodos
@@ -195,6 +199,7 @@ export default {
           roomID: this.id,
           message: this.message,
           photo: this.fileURL,
+          filter: this.filter,
         });
         this.scrollDown();
         this.clearData();
@@ -231,6 +236,27 @@ export default {
       this.message = '';
       this.photo = null;
       this.fileURL = null;
+      this.filter = null;
+    },
+
+    /**
+     * Detecta cambios a la subida del fichero
+     */
+    async onFileChange() {
+      try {
+        this.filter = await this.requestConfirmation({
+          props: {
+            message: 'Select your filter for your photo',
+            title: 'Choose filter',
+            file: this.messagePhoto,
+            filters: this.filters,
+          },
+          component: 'FilterModal',
+        });
+      } catch (error) {
+        // console.error(error.message);
+        // this.toast({ message: error.message, type: 'is-danger' });
+      }
     },
   },
 
@@ -250,7 +276,7 @@ export default {
     // Nos traemos el estado
     ...mapGetters('user', ['getUserUid']),
     ...mapGetters('rooms', ['getRoom']),
-    ...mapState('messages', ['messages']),
+    ...mapState('messages', ['messages', 'filters']),
     // Las computed no pueden ser arrow functions
     roomMesseges() {
       return this.messages.filter((message) => message.roomId === this.id);
@@ -310,11 +336,10 @@ export default {
   .photo-preview {
     width: 5rem;
     height: 5rem;
-    border: 1px solid;
     background-position: center;
     background-size: cover;
     margin-right: 1rem;
-    border-radius: 1rem;
+    border-radius: 0.25rem;
     cursor: pointer;
   }
 }

@@ -9,6 +9,28 @@ import Storage from '../services/Firebase/Storage';
 const state = {
   messages: [],
   messagesListener: () => { }, // Para activar o desactivar los evento de escucha
+  // Filtros graficos de imagenes
+  filters: [
+    { name: 'normal' },
+    { name: 'clarendon' },
+    { name: 'gingham' },
+    { name: 'moon' },
+    { name: 'lark' },
+    { name: 'reyes' },
+    { name: 'juno' },
+    { name: 'slumber' },
+    { name: 'aden' },
+    { name: 'perpetua' },
+    { name: 'mayfair' },
+    { name: 'rise' },
+    { name: 'hudson' },
+    { name: 'valencia' },
+    { name: 'xpro2' },
+    { name: 'willow' },
+    { name: 'lofi' },
+    { name: 'inkwell' },
+    { name: 'nashville' },
+  ],
 };
 
 const getters = {};
@@ -67,7 +89,9 @@ const actions = {
    * @param {rootState} rootState
    * @param {message} message
    */
-  async messageCreate({ rootState }, { roomID, message, photo }) {
+  async messageCreate({ rootState }, {
+    roomID, message, photo, filter,
+  }) {
     return Message.createMessage(
       {
         userId: rootState.user.user.uid,
@@ -75,6 +99,7 @@ const actions = {
         roomId: roomID,
         message,
         photo,
+        filter,
         createdAt: Date.now(),
       },
     );

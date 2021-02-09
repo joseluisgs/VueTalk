@@ -6,7 +6,7 @@ export default {
    * @param {*} message Dato del mensaje
    */
   async createMessage({
-    roomId, userId, userName, message, photo,
+    roomId, userId, userName, message, photo, filter,
   }) {
     return Service.roomsCollection.doc(roomId).collection('messages')
       .add({
@@ -14,6 +14,7 @@ export default {
         userName,
         message,
         photo,
+        filter,
         roomId,
         createdAt: Date.now(),
       });
