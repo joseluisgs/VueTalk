@@ -1,7 +1,6 @@
 # VueTalk
 
-Aplicación de chats para hablar con tus contactos usando Vue.js, Firebase y Bulma.
-
+Apliación realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en tiempo real con intercambio de mensajes y ficheros en distintas salas. 
 [![Vue Ready](https://img.shields.io/badge/Vue.js-%20Ready-%2342b983)](https://es.vuejs.org/)
 [![Firebase](https://img.shields.io/badge/Firebase-Ready-orange)](https://instavue-fire.web.app)
 [![Bulma/Buefy](https://img.shields.io/badge/Bulma/Buefy-%20Ready-blueviolet)](https://buefy.org/)
@@ -10,21 +9,21 @@ Aplicación de chats para hablar con tus contactos usando Vue.js, Firebase y Bul
 [![Licence](https://img.shields.io/github/license/joseluisgs/NodeMonRest)](https://github.com/joseluisgs/VueTalk/blob/main/LICENSE)
 ![GitHub](https://img.shields.io/github/last-commit/joseluisgs/VueTalk)
 
-* [VueTalk](#vuetalk)
-    * [Acerca de](#acerca-de)
-    * [Project setup](#project-setup)
-        * [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
-        * [Compiles and minifies for production](#compiles-and-minifies-for-production)
-        * [Run your unit tests](#run-your-unit-tests)
-        * [Lints and fixes files](#lints-and-fixes-files)
-        * [Customize configuration](#customize-configuration)
-    * [Autor](#autor)
-    * [Licencia](#licencia)
-        * [Agradecimientos](#agradecimientos)
+- [VueTalk](#vuetalk)
+  - [Acerca de](#acerca-de)
+  - [Project setup](#project-setup)
+    - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
+    - [Compiles and minifies for production](#compiles-and-minifies-for-production)
+    - [Run your unit tests](#run-your-unit-tests)
+    - [Lints and fixes files](#lints-and-fixes-files)
+    - [Customize configuration](#customize-configuration)
+  - [Autor](#autor)
+  - [Licencia](#licencia)
+    - [Agradecimientos](#agradecimientos)
 
 ## Acerca de
 
-Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en tiempo real con intercambio de ficheros en distintas salas. Como iconos se ha usado
+Proyecto realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en tiempo real con intercambio de mensajes y ficheros en distintas salas. Como iconos se ha usado
 [Material Icons](https://materialdesignicons.com/)
 
 Algunos aspectos reseñables:
@@ -32,7 +31,7 @@ Algunos aspectos reseñables:
 * Dispone de un sistema para autentificar y registrar los usuarios. [Firebase Auth](https://firebase.google.com/docs/auth).
 * Crear salas de conversación e interactuar con ellas y con otros usuarios, en tiempo real. [Cloud Firestore](https://firebase.google.com/docs/firestore?hl=es).
 * Reglas de seguridad y permiso para acceder a las salas con [Cloud Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started#testing_rules)
-* Editar las salas, cambiar su portada y enviar archivos multimedia. Cloud Storage y Cloud Functions.
+* Editar las salas, cambiar su portada y enviar archivos multimedia. [Cloud Storage](https://firebase.google.com/docs/storage) y Cloud Functions.
 * Elementos de [Vue](https://vuejs.org/v2/guide/), [VueCLI](https://cli.vuejs.org/guide/), [Vuex](https://vuex.vuejs.org/guide/), [Vue Router](https://router.vuejs.org/guide/) y demás.
 * Despliegue en Firebase Hosting, Netlify y/o Heroku (Estos dos son opcionales).
 
