@@ -23,6 +23,10 @@
                   :class="message.filter"
                   :style="{ 'background-image': `url(${message.photo})` }"
                 ></div>
+                <!-- Message has audio -->
+                <div v-if="message.audio" class="message__audio">
+                  <audio :src="message.audio" controls></audio>
+                </div>
                 <p class="message__text">
                   {{ message.message }}
                   <span>
@@ -52,44 +56,56 @@
           v-model.trim="message"
           key="message-create-input"
         ></b-input>
-
-        <!-- Imagen adjunta -->
-        <!-- Preview de foto -->
-        <div
-          v-if="photo"
-          @click="photo = null"
-          :class="filter"
-          class="photo-preview"
-          :style="{ 'background-image': `url(${messagePhoto})` }"
-        ></div>
-        <!-- Upload foto -->
-        <div class="control mr-1">
-          <b-field class="file is-primary">
-            <b-upload
-              v-model="photo"
-              class="file-label"
-              accept="image/jpeg, image/png, image/gif"
-              :class="{ 'is-loading': isLoading }"
-              @input="onFileChange"
-            >
-              <span class="file-cta">
-                <b-icon icon="file-upload"></b-icon>
-                <!-- <span class="file-label">🌄</span> -->
-              </span>
-            </b-upload>
-          </b-field>
-        </div>
-        <!-- Enviar -->
-        <div class="buttons">
-          <b-button
-            :disabled="!message"
-            type="is-info"
-            native-type="submit"
-            :loading="isLoading"
-            icon-left="send"
-            >Send
-          </b-button>
-        </div>
+          <!-- Imagen adjunta -->
+          <!-- Preview de foto -->
+            <div
+              v-if="photo"
+              @click="photo = null"
+              :class="filter"
+              class="photo-preview"
+              :style="{ 'background-image': `url(${messagePhoto})` }"
+            ></div>
+            <!-- Preview Audio -->
+            <div v-if="audio" class="audio-preview">
+              <a href="#" @click="audio = null" class="close">X</a>
+              <audio :src="messageAudio" controls></audio>
+            </div>
+            <!-- Upload Audio -->
+                <b-button
+                  @click="recordAudio"
+                  :disabled="isLoading"
+                  type="is-link is-light"
+                  :loading="isLoading"
+                  icon-left="microphone-plus"
+                  class="mr-1 px-5"
+                >
+                </b-button>
+            <!-- Upload foto -->
+            <div class="control mr-1">
+              <b-field class="file is-primary">
+                <b-upload
+                  v-model="photo"
+                  accept="image/jpeg, image/png, image/gif"
+                  :class="{ 'is-loading': isLoading }"
+                  @input="onFileChange"
+                >
+                  <span class="file-cta">
+                    <b-icon icon="file-upload"></b-icon>
+                    <!-- <span class="file-label">🌄</span> -->
+                  </span>
+                </b-upload>
+              </b-field>
+          </div>
+          <!-- Enviar -->
+            <b-button
+              :disabled="!message"
+              type="is-info"
+              native-type="submit"
+              :loading="isLoading"
+              icon-left="send"
+              class="px-5"
+              > Send
+            </b-button>
       </form>
     </section>
   </div>
@@ -101,6 +117,7 @@ import {
 } from 'vuex';
 
 import FilterModal from '../components/FilterModalComponent.vue';
+import RecordModal from '../components/RecordModalComponent.vue';
 
 // Librería de tiempo y su plugin de tiempo relativo
 const dayjs = require('dayjs');
@@ -118,7 +135,9 @@ export default {
     room: null,
     userUid: '',
     photo: null,
-    fileURL: null,
+    audio: null,
+    photoURL: null,
+    audioURL: null,
     filter: null,
   }),
 
@@ -183,9 +202,9 @@ export default {
   methods: {
     // De vuex
     ...mapMutations('messages', ['setMessagesListener']),
-    ...mapActions('messages', ['messageCreate', 'uploadMessageImage']),
+    ...mapActions('messages', ['messageCreate', 'uploadMessageFile']),
     ...mapActions('rooms', ['getRoomByID']),
-    ...mapActions('utils', ['toast', 'modal', 'requestConfirmation']),
+    ...mapActions('utils', ['toast', 'modal']),
     ...mapActions('user', ['updateMeta']),
 
     // Mis métodos
@@ -194,14 +213,29 @@ export default {
       try {
         // Subimos la imagen si la hay
         if (this.photo) {
-          this.fileURL = await this.uploadMessageImage({ roomID: this.id, file: this.photo });
+          this.photoURL = await this.uploadMessageFile({
+            roomID: this.id,
+            file: this.photo,
+            type: 'photo',
+          });
         }
+
+        // Si tenemos audio
+        if (this.audio) {
+          this.audioURL = await this.uploadMessageFile({
+            roomID: this.id,
+            file: this.audio,
+            type: 'audio',
+          });
+        }
+
         // Creamos el mensaje
         await this.messageCreate({
           roomID: this.id,
           message: this.message,
-          photo: this.fileURL,
+          photo: this.photoURL,
           filter: this.filter,
+          audio: this.audioURL,
         });
         this.scrollDown();
         this.clearData();
@@ -237,8 +271,10 @@ export default {
     clearData() {
       this.message = '';
       this.photo = null;
-      this.fileURL = null;
+      this.photoURL = null;
       this.filter = null;
+      this.audio = null;
+      this.audioURL = null;
     },
 
     /**
@@ -277,6 +313,32 @@ export default {
         // this.toast({ message: error.message, type: 'is-danger' });
       }
     },
+
+    /**
+     * Graba un audio en nuestra web
+     */
+    async recordAudio() {
+      try {
+        this.modal({
+          component: RecordModal,
+          parent: this,
+          hasModalCard: true,
+          props: {
+            message: 'Record your voice 🎤',
+            title: 'Record Audio',
+          },
+          events: {
+            confirm: (value) => {
+              this.audio = value;
+              console.log(this.audio);
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error.message);
+        this.$toast.error(error.message);
+      }
+    },
   },
 
   // Mis filtros
@@ -304,6 +366,10 @@ export default {
     // Devuelve la imagen de la photo
     messagePhoto() {
       return URL.createObjectURL(this.photo);
+    },
+    // Devuleve el objeto url del Audio
+    messageAudio() {
+      return URL.createObjectURL(this.audio);
     },
   },
 };
@@ -360,6 +426,23 @@ export default {
     margin-right: 1rem;
     // border-radius: 0.25rem;
     cursor: pointer;
+  }
+
+  .audio-preview {
+    margin-right: 1rem;
+    cursor: pointer;
+    position: relative;
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 1rem;
+      font-weight: bold;
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      z-index: 1;
+    }
   }
 }
 .form {

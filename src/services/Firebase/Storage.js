@@ -57,12 +57,12 @@ export default {
    * @param {*} roomID
    * @param {*} file
    */
-  async uploadMessageImage(roomID, userUID, file) {
+  async uploadMessageFile(roomID, userUID, file, ext) {
     // Función que sube el fichero
     const timestamp = Date.now();
     const uploadFile = () => {
-      // Creamos el nombre y path del fichero
-      const fileName = `${roomID}/messages/${userUID}-${timestamp}.jpg`;
+      // Creamos el nombre y path del fichero y su extensión
+      const fileName = `${roomID}/messages/${userUID}-${timestamp}.${ext}`;
       const fileRef = roomsStorage.child(fileName);
       return fileRef.put(file);
     };

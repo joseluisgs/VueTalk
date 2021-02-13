@@ -3,9 +3,13 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-      <p class="modal-card-title">{{ title }}</p>
-      <button class="delete" aria-label="close" @click="$emit('close')"></button>
-    </header>
+        <p class="modal-card-title">{{ title }}</p>
+        <button
+          class="delete"
+          aria-label="close"
+          @click="$emit('close')"
+        ></button>
+      </header>
       <section class="modal-card-body">
         <h3 class="subtitle has-text-centered is-size-4 is-marginless">
           {{ message }}
@@ -37,9 +41,7 @@
       </section>
       <footer class="modal-card-foot buttons is-right">
         <!-- Botones que emiten la acción y devuelve el filtro seleccionado  -->
-        <b-button @click="confirm()" :class="actionClass">
-          Confirm
-        </b-button>
+        <b-button @click="confirm()" :class="actionClass"> Confirm </b-button>
         <b-button @click="$emit('close')"> Cancel </b-button>
       </footer>
     </div>
@@ -49,7 +51,7 @@
 <script>
 export default {
   name: 'FilterModalComponent',
-  // Propiedades
+  // Propiedades que me vienen del padre
   props: {
     file: {
       type: String,
@@ -77,7 +79,12 @@ export default {
   data: () => ({
     activeFilter: 'normal',
   }),
+
+  // Mis métodos
   methods: {
+    /**
+     * Emitimos el evento confirm, devolviendo el filtro y cerramos el modal
+     */
     confirm() {
       this.$emit('confirm', this.activeFilter);
       this.$parent.close();
@@ -88,7 +95,7 @@ export default {
 
 <style lang="scss" scoped>
 .modal {
- display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }

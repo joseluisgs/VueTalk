@@ -85,12 +85,12 @@ const actions = {
   },
 
   /**
-   * Envía y almacena un mensaje y sus datos de una sala
+   * Envía y almacena un mensaje y sus datos/adjuntos de una sala
    * @param {rootState} rootState
    * @param {message} message
    */
   async messageCreate({ rootState }, {
-    roomID, message, photo, filter,
+    roomID, message, photo, filter, audio,
   }) {
     return Message.createMessage(
       {
@@ -100,6 +100,7 @@ const actions = {
         message,
         photo,
         filter,
+        audio,
         createdAt: Date.now(),
       },
     );
@@ -110,10 +111,11 @@ const actions = {
    * @param {*} context
    * @param {*} elementos a lamcenar
    */
-  async uploadMessageImage({ rootGetters }, { roomID, file }) {
+  async uploadMessageFile({ rootGetters }, { roomID, file, type }) {
     // Obtenemos el UID del usuario usando su getter
     const userUID = rootGetters['user/getUserUid'];
-    return Storage.uploadMessageImage(roomID, userUID, file);
+    const ext = type === 'photo' ? 'jpg' : 'wav';
+    return Storage.uploadMessageFile(roomID, userUID, file, ext);
   },
 };
 
