@@ -269,12 +269,12 @@ const actions = {
   },
 
   /**
-   * Elimina todas las imagenes de la sala
+   * Elimina todas los Ficheros de la sala
    * @param {*} context
    * @param {*} param1
    */
-  async removeRoomImages(context, roomID) {
-    return Storage.removeRoomImages(roomID);
+  async removeRoomFiles(context, roomID) {
+    return Storage.removeRoomFiles(roomID);
   },
 
 };

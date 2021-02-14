@@ -117,6 +117,24 @@ const actions = {
     const ext = type === 'photo' ? 'jpg' : 'wav';
     return Storage.uploadMessageFile(roomID, userUID, file, ext);
   },
+
+  /**
+   * Borra un fichero
+   * @param {*} context
+   * @param {*} file
+   */
+  async deleteMessageFile(context, file) {
+    return Storage.deleteMessageFile(file);
+  },
+
+  /**
+   * Borra un mensaje
+   * @param {*} context
+   * @param {*} param1
+   */
+  async messageDelete(context, { roomID, messageID }) {
+    return Message.deleteMessage(roomID, messageID);
+  },
 };
 
 export default {

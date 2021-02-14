@@ -1,7 +1,7 @@
 import Service from './index';
 
 // Recurso
-const { roomsStorage } = Service;
+const { roomsStorage, urlStorage } = Service;
 
 // Operaciones
 export default {
@@ -32,10 +32,10 @@ export default {
   },
 
   /**
-   * Elimina todas las imagenes de una sala
+   * Elimina todas los ficheros de una sala
    * @param {*} roomID
    */
-  async removeRoomImages(roomID) {
+  async removeRoomFiles(roomID) {
     // Borramos todo lo que tiene la sala contenido
     try {
       const dirRef = roomsStorage.child(roomID);
@@ -74,6 +74,20 @@ export default {
     try {
       const upload = await uploadFile();
       return await fileURL(upload.ref);
+    } catch (error) {
+      throw Error(error.message);
+    }
+  },
+
+  /**
+   * Borra un mensaje desde almacenamiento
+   * @param {*} file
+   */
+  async deleteMessageFile(file) {
+    try {
+      // Obtenemos la referencia del fichero de manera inversa, es decir, en base a su URL
+      const fileRef = urlStorage.refFromURL(file);
+      return await fileRef.delete();
     } catch (error) {
       throw Error(error.message);
     }

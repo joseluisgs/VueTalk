@@ -83,6 +83,7 @@ label.label {
   background-color: var(--dynamic-background-footer);
   color: var(--dynamic-title-color);
   transition: background-color $animate_theme;
+  z-index: 1;
   // Parrafo del footer
 }
 

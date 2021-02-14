@@ -30,6 +30,7 @@ const user = auth.currentUser;
 // Colecciones de documentos a usar
 const usersCollection = db.collection('vuetalk-users');
 const roomsCollection = db.collection('vuetalk-rooms');
+
 // const likesCollection = db.collection('likes');
 
 // imprimimos el nombre del proyecto, esto espor depurar, luego quitar si se quiere
@@ -37,6 +38,7 @@ const roomsCollection = db.collection('vuetalk-rooms');
 
 // Creamos los directorios para almacenar las constants
 const roomsStorage = storage.child('vuetalk').child('rooms');
+const urlStorage = firebase.storage();
 
 // Exportamos lo que necesitemos
 export default {
@@ -44,7 +46,6 @@ export default {
   firebase, // Para algunas opciones como los metadatos
   db,
   auth,
-  storage,
   // Usuario actual
   user,
   defaultProject,
@@ -55,5 +56,7 @@ export default {
   roomsCollection,
   // Almacenamiento
   roomsStorage,
+  // Para la resolución inversa
+  urlStorage,
 
 };

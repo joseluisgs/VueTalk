@@ -20,4 +20,17 @@ export default {
         createdAt: Date.now(),
       });
   },
+
+  /**
+   * Elimina de una sala determinada un mensaje determinado
+   * @param {*} roomID
+   * @param {*} messageID
+   */
+  async deleteMessage(roomID, messageID) {
+    await Service.roomsCollection
+      .doc(roomID)
+      .collection('messages')
+      .doc(messageID)
+      .delete();
+  },
 };

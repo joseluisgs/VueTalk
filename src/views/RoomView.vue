@@ -9,13 +9,22 @@
             <div class="messages content" ref="messages">
               <!-- Si el mensaje es nuestro lo ponemos de otro color -->
               <div
-                v-for="message in roomMesseges"
+                v-for="message in roomMessages"
                 :key="message.id"
                 class="message"
                 :class="{
                   'message--own': message.userId === getUserUid,
                 }"
               >
+                <!-- Para borrar el mensaje y sus datos asociados solo si somos dueños del mensaje -->
+                <!-- Delete message -->
+                <a
+                  href="#"
+                  v-if="message.userId === getUserUid"
+                  @click="deleteMessage(message.id)"
+                  class="message__delete is-pulled-right button is-small is-danger is-outlined"
+                  >X</a
+                >
                 <!-- Message has photo -->
                 <div
                   v-if="message.photo"
@@ -202,9 +211,9 @@ export default {
   methods: {
     // De vuex
     ...mapMutations('messages', ['setMessagesListener']),
-    ...mapActions('messages', ['messageCreate', 'uploadMessageFile']),
+    ...mapActions('messages', ['messageCreate', 'uploadMessageFile', 'deleteMessageFile', 'messageDelete']),
     ...mapActions('rooms', ['getRoomByID']),
-    ...mapActions('utils', ['toast', 'modal']),
+    ...mapActions('utils', ['toast', 'modal', 'confirm']),
     ...mapActions('user', ['updateMeta']),
 
     // Mis métodos
@@ -336,7 +345,46 @@ export default {
         });
       } catch (error) {
         console.error(error.message);
-        this.$toast.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
+      }
+    },
+
+    /**
+     * Borra un mensaje determinado y sus ficheros adjuntos
+     */
+    async deleteMessage(messageID) {
+      try {
+        const res = await this.confirm({
+          title: '¿Delete message?',
+          message: 'Are you sure you want to <b>delete</b> this message? This action cannot be undone.',
+          confirmText: 'Delete Message',
+          type: 'is-danger',
+        });
+        if (res) {
+          // Obtenemos el mensaje y sus datos
+          const messageToDelete = this.roomMessages.find((mensaje) => mensaje.id === messageID);
+
+          // Si tiene foto, la borramos
+          if (messageToDelete.photo) {
+            await this.deleteMessageFile(messageToDelete.photo);
+          }
+
+          // Si tiene audio, lo borramos
+          if (messageToDelete.audio) {
+            await this.deleteMessageFile(messageToDelete.audio);
+          }
+
+          // Finalmente borramos el mensaje
+          await this.messageDelete({
+            roomID: this.id,
+            messageID,
+          });
+          this.toast({ message: 'Message deleted', type: 'is-success' });
+          return;
+        }
+      } catch (error) {
+        console.error(error.message);
+        this.toast({ message: error.message, type: 'is-danger' });
       }
     },
   },
@@ -359,7 +407,7 @@ export default {
     ...mapGetters('rooms', ['getRoom']),
     ...mapState('messages', ['messages', 'filters']),
     // Las computed no pueden ser arrow functions
-    roomMesseges() {
+    roomMessages() {
       return this.messages.filter((message) => message.roomId === this.id);
     },
 
@@ -407,6 +455,11 @@ export default {
   &__text {
     color: rgb(61, 61, 61);
   }
+  &__delete {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1rem;
+  }
 }
 .send {
   background-color: lightgray;
@@ -417,6 +470,7 @@ export default {
   width: 100%;
   height: 12rem;
   box-shadow: -0px -2px 3px rgb(190, 190, 190);
+  z-index: 1;
 
   .photo-preview {
     width: 5rem;
