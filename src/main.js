@@ -1,8 +1,21 @@
 import Vue from 'vue';
-import App from './App.vue';
+// Estilos
+import Buefy from 'buefy';
+import 'buefy/dist/buefy.css';
 import './registerServiceWorker';
 import router from './router';
 import store from './store';
+import App from './App.vue';
+
+// Firebase
+import Firebase from './services/Firebase';
+
+console.log(`⚑ Firebase -> ${Firebase.defaultProject.name} ✓`);
+
+// Importamos nuestros estilos globales de bulma
+require('./assets/css/main.scss');
+
+Vue.use(Buefy);
 
 Vue.config.productionTip = false;
 

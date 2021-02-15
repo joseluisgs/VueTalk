@@ -1,0 +1,103 @@
+// Importamos el estilo de bulma, el cual si queremos podemos sobresescribir. Lo veremos más adelante
+// https://bulma.io/documentation/customize/with-node-sass/
+
+
+// Importamos nuestros temas de colores y hacemos uso de custom vars de CSS
+// https://developer.mozilla.org/es/docs/Web/CSS/Using_CSS_custom_properties
+@import 'theme-colors';
+
+$animate_theme: 1s; // Mejoras en el tema osucro para que parezca animado
+
+// Mis Colores
+@import 'node_modules/bulma/sass/utilities/initial-variables';
+@import 'node_modules/bulma/sass/utilities/functions';
+// Nuevos colores y mapas de colores
+$twitter: #55acee;
+$twitter-invert: findColorInvert($twitter);
+$github: #333;
+$github-invert: findColorInvert($github);
+$linkedin: #0077b5;
+$linkedin-invert: findColorInvert($linkedin);
+// Actualizmos el mapa de colores
+@import 'node_modules/bulma/sass/utilities/derived-variables';
+$addColors: (
+  'twitter': (
+    $twitter,
+    $twitter-invert,
+  ),
+  'github': (
+    $github,
+    $github-invert,
+  ),
+  'linkedin': (
+    $linkedin,
+    $linkedin-invert,
+  ),
+);
+$colors: map-merge($colors, $addColors);
+
+// Resto de bulma
+@import '~bulma/bulma';
+
+html {
+  overflow: scroll; // Saco la barra de scroll
+  overflow-x: hidden; // Escondo la barra horizontal
+  background-color: var(--app-background-color);
+  transition: background-color $animate_theme;
+}
+
+body {
+  background: var(--app-background-color);
+  transition: background $animate_theme;
+}
+
+// Instancia de de VUE
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--dynamic-text-color);
+}
+
+// Elementos para colores especificos según el tema
+h1.title {
+  color: var(--dynamic-title-color);
+}
+
+label.label {
+  color: var(--dynamic-title-color);
+}
+
+.card {
+  background-color: var(--app-background-secoundary-color);
+  color: var(--dynamic-title-color);
+  transition: background-color $animate_theme;
+}
+
+.footer {
+  padding: 0.8rem 0.8rem 0.6rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: -0px -2px 3px rgb(190, 190, 190);
+  background-color: var(--dynamic-background-footer);
+  color: var(--dynamic-title-color);
+  transition: background-color $animate_theme;
+  z-index: 1;
+  // Parrafo del footer
+}
+
+// Elementos propios que aparecerán como clases
+.app-background {
+  background-color: var(--app-background-color);
+}
+
+// Algunos estilos propios que voy a usar en algunos elementos, por ejemplo para no modificar el h1.title
+.dynamic-title {
+  color: var(--dynamic-title-color);
+}
+
+.dynamic-subtitle {
+  color: var(--dynamic-subtitle-color);
+  // padding-top: 10px;
+}
