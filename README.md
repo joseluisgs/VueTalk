@@ -7,6 +7,7 @@ Apliación realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en 
 [![Bulma/Buefy](https://img.shields.io/badge/Bulma/Buefy-%20Ready-blueviolet)](https://buefy.org/)
 [![JS Code](https://img.shields.io/badge/JS%20Code-ES2019-yellow)](https://www.ecma-international.org/ecma-262)
 [![JS Style](https://img.shields.io/badge/JS%20Style-AirBnB-ff69b4)](https://airbnb.io/javascript)
+
 [![Licence](https://img.shields.io/github/license/joseluisgs/NodeMonRest)](https://github.com/joseluisgs/VueTalk/blob/main/LICENSE)
 ![GitHub](https://img.shields.io/github/last-commit/joseluisgs/VueTalk)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/615e72ac-07e3-42e9-9080-431ef5132871/deploy-status)](https://app.netlify.com/sites/vue-talk/deploys)
