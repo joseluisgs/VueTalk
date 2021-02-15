@@ -8,6 +8,7 @@ Apliación realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en 
 [![JS Style](https://img.shields.io/badge/JS%20Style-AirBnB-ff69b4)](https://airbnb.io/javascript)
 [![Licence](https://img.shields.io/github/license/joseluisgs/NodeMonRest)](https://github.com/joseluisgs/VueTalk/blob/main/LICENSE)
 ![GitHub](https://img.shields.io/github/last-commit/joseluisgs/VueTalk)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/615e72ac-07e3-42e9-9080-431ef5132871/deploy-status)](https://app.netlify.com/sites/vue-talk/deploys)
 
 - [VueTalk](#vuetalk)
   - [Acerca de](#acerca-de)
@@ -33,7 +34,7 @@ Algunos aspectos reseñables:
 * Reglas de seguridad y permiso para acceder a las salas con [Cloud Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started#testing_rules)
 * Editar las salas, cambiar su portada y enviar archivos multimedia. [Cloud Storage](https://firebase.google.com/docs/storage) y Cloud Functions.
 * Elementos de [Vue](https://vuejs.org/v2/guide/), [VueCLI](https://cli.vuejs.org/guide/), [Vuex](https://vuex.vuejs.org/guide/), [Vue Router](https://router.vuejs.org/guide/) y demás.
-* Despliegue en Netlify.
+* Despliegue en [Netlify](https://vue-talk.netlify.app/).
 
 ## Project setup
 
