@@ -33,7 +33,7 @@ Algunos aspectos reseñables:
 * Reglas de seguridad y permiso para acceder a las salas con [Cloud Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started#testing_rules)
 * Editar las salas, cambiar su portada y enviar archivos multimedia. [Cloud Storage](https://firebase.google.com/docs/storage) y Cloud Functions.
 * Elementos de [Vue](https://vuejs.org/v2/guide/), [VueCLI](https://cli.vuejs.org/guide/), [Vuex](https://vuex.vuejs.org/guide/), [Vue Router](https://router.vuejs.org/guide/) y demás.
-* Despliegue en Firebase Hosting, Netlify y/o Heroku (Estos dos son opcionales).
+* Despliegue en Netlify.
 
 ## Project setup
 
