@@ -38,7 +38,7 @@ Algunos aspectos reseñables:
 * Editar las salas, cambiar su portada y enviar archivos multimedia. [Cloud Storage](https://firebase.google.com/docs/storage) y Cloud Functions.
 * Elementos de [Vue](https://vuejs.org/v2/guide/), [VueCLI](https://cli.vuejs.org/guide/), [Vuex](https://vuex.vuejs.org/guide/), [Vue Router](https://router.vuejs.org/guide/) y demás.
 * Despliegue en [Netlify](https://vue-talk.netlify.app/).
-* Apliación nativa con [Electron](https://www.electronjs.org/)
+* Apliación nativa con [Electron](https://www.electronjs.org/).
 
 ## Project setup
 
