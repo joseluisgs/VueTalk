@@ -1,6 +1,7 @@
 # VueTalk
 
 Apliación realizado con Vue.js, Firebase y Bulma/Buefy. Apliación de chats en tiempo real con intercambio de mensajes y ficheros en distintas salas. 
+
 [![Vue Ready](https://img.shields.io/badge/Vue.js-%20Ready-%2342b983)](https://es.vuejs.org/)
 [![Firebase](https://img.shields.io/badge/Firebase-Ready-orange)](https://instavue-fire.web.app)
 [![Bulma/Buefy](https://img.shields.io/badge/Bulma/Buefy-%20Ready-blueviolet)](https://buefy.org/)
