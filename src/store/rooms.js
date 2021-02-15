@@ -1,9 +1,12 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable global-require */
 /* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 
 import Rooms from '../services/Firebase/Room';
 import Service from '../services/Firebase/index';
+import Storage from '../services/Firebase/Storage';
 
 /**
  * Estado para Salas
@@ -29,6 +32,13 @@ const getters = {
    * @param {*} state
    */
   roomsByDate: (state) => state.rooms.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+
+  // Devuelve la imagen de una sala
+  roomImage: (state) => (id) => {
+    const room = state.rooms.find((room) => room.id === id);
+    return room.image ? room.image : require('@/assets/img/chat-room.png');
+  },
+
 };
 
 const mutations = {
@@ -110,12 +120,14 @@ const actions = {
   /**
    * Crea una habitacion
    * @param {state} estado raíz, el padre para acceder a otros
-   * @param {*} nombre y descripción de la sala
+   * @param {*} nombre, descripción, magen e id de la sala
    */
-  async roomsCreate({ rootState }, { name, description }) {
+  async roomsCreate({ rootState }, {
+    name, description, image, roomID,
+  }) {
     const { uid, displayName } = rootState.user.user;
     Rooms.createRoom({
-      name, description, uid, displayName,
+      name, description, image, roomID, uid, displayName,
     });
   },
 
@@ -156,7 +168,7 @@ const actions = {
             roomData: change.doc.data(),
             id: change.doc.id,
           });
-        // El cambio es actualizar un elemento: sala
+          // El cambio es actualizar un elemento: sala
         } else if (change.type === 'modified') {
           console.log('Change --> modified');
           commit('updateRoom', {
@@ -164,7 +176,7 @@ const actions = {
             roomData: change.doc.data(),
             id: change.doc.id,
           });
-        // El cambio es eliminar un elemento: sala
+          // El cambio es eliminar un elemento: sala
         } else if (change.type === 'removed') {
           console.log('Change --> removed');
           commit('removeRoom', change.doc.id);
@@ -188,8 +200,12 @@ const actions = {
    * @param {context} context
    * @param {room} room data
    */
-  async roomUpdate(context, { roomID, name, description }) {
-    return Rooms.updateRoom({ roomID, name, description });
+  async roomUpdate(context, {
+    roomID, name, description, image,
+  }) {
+    return Rooms.updateRoom({
+      roomID, name, description, image,
+    });
   },
 
   /**
@@ -234,6 +250,31 @@ const actions = {
     } else {
       throw new Error('User is not admin of this room');
     }
+  },
+
+  /**
+   * Devuelve el ID de un nuevo documento
+   */
+  async getNewRoomId() {
+    return Rooms.getNewId();
+  },
+
+  /**
+   * Sube una imagen al storage
+   * @param {*} context
+   * @param {*} elementos a lamcenar
+   */
+  async uploadRoomImage(context, { roomID, file }) {
+    return Storage.uploadRoomImage(roomID, file);
+  },
+
+  /**
+   * Elimina todas los Ficheros de la sala
+   * @param {*} context
+   * @param {*} param1
+   */
+  async removeRoomFiles(context, roomID) {
+    return Storage.removeRoomFiles(roomID);
   },
 
 };

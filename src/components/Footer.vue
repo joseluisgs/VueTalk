@@ -1,6 +1,6 @@
 <template>
-   <footer class="mi-footer">
-        <div class="has-text-centered is-size-7">
+   <footer class="footer">
+        <div class="has-text-centered is-size-7-mobile">
             <p class="copyright">Coding with <b-icon
                   icon="heart-multiple"
                   size="is-small"
@@ -8,6 +8,7 @@
               </b-icon> &copy;
                 <a href="http://github.com/joseluisgs" target="_blank" rel="noopener noreferrer">José Luis González
                     Sánchez</a>. 2021
+                    <p>
             <a href="https://twitter.com/joseluisgonsan" target="_blank" class="mr-1">
               <b-icon
                   icon="twitter"
@@ -35,13 +36,4 @@
 </template>
 
 <style lang="scss">
-.mi-footer {
-  padding: 0.8rem 0.8rem 0.8rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  box-shadow: -1px -1px 5px lightgray;
-  background-color: whitesmoke;
-  // Parrafo del footer
-}
 </style>

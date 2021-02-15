@@ -1,5 +1,5 @@
 <template>
-  <b-navbar type="is-primary" shadow fixed-top>
+  <b-navbar type="is-primary" fixed-top>
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ name: 'Home' }">
         <img
@@ -21,7 +21,7 @@
         <b-navbar-item tag="router-link" :to="{ name: 'About' }" href="#">
           About
         </b-navbar-item>
-        <b-navbar-item href="https://twitter.com/joseluisgonsan">
+        <b-navbar-item href="https://twitter.com/joseluisgonsan" target="_blank">
           Contact
         </b-navbar-item>
       </b-navbar-dropdown>
@@ -46,14 +46,16 @@
           </template>
         </div>
       </b-navbar-item>
+      <b-navbar-item>
       <b-switch v-model="darkMode" passive-type="is-warning" type="is-dark">
-        <span v-if="darkMode === true">
+        <span v-if="darkMode === true" class="is-flex is-align-content-center">
           <img alt="logo" src="../assets/img/moon.png" width="25" />
         </span>
-        <span v-else>
+        <span v-else class="is-flex is-align-content-center">
           <img alt="logo" src="../assets/img/sun.png" width="25" />
         </span>
       </b-switch>
+      </b-navbar-item>
     </template>
   </b-navbar>
 </template>
@@ -122,5 +124,9 @@ export default {
 .navbar__logo {
   width: 200px;
   height: auto;
+}
+
+.navbar {
+  box-shadow: 0px 2px 3px  rgb(190, 190, 190);
 }
 </style>

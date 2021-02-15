@@ -33,7 +33,40 @@
                 </span> -->
               </p>
             </b-field>
-
+             <!-- Fichero -->
+            <label class="label">Image</label>
+            <div
+              class="room__image"
+              :style="{
+                'background-image': `url(${roomImage})`,
+              }"
+            >
+              <!-- Para borrar la imagen -->
+              <a
+                href="#"
+                v-if="imageURL"
+                @click.prevent="removeImage"
+                class="is-pulled-right button is-small is-danger is-outlined"
+                >X</a
+              >
+            </div>
+            <b-field class="file is-primary" :class="{ 'has-name': !!image }">
+              <b-upload
+                v-model="image"
+                accept="image/jpeg, image/png, image/gif"
+                class="file-label"
+                @input="onFileChange"
+              >
+                <span class="file-cta">
+                  <b-icon class="file-icon" icon="upload"></b-icon>
+                  <span class="file-label">Choose a image</span>
+                </span>
+                <span class="file-name" v-if="image">
+                  {{ image.name }}
+                </span>
+              </b-upload>
+            </b-field>
+            <!-- Botones de enviar -->
             <div class="field is-grouped is-grouped-right">
               <div class="buttons">
                 <b-button
@@ -73,6 +106,8 @@ export default {
   data: () => ({
     isLoading: false,
     room: null,
+    image: null,
+    imageURL: null,
   }),
 
   // Mis propiedades
@@ -91,6 +126,8 @@ export default {
   async created() {
     try {
       this.room = await this.getRoomByID(this.id);
+      // Asignamos la imagen sea la que sea
+      this.imageURL = this.room.image;
     } catch (error) {
       console.error(error.message);
       this.toast({ message: error.message, type: 'is-danger' });
@@ -102,7 +139,7 @@ export default {
   // Mis métodos
   methods: {
     // De vuex
-    ...mapActions('rooms', ['roomUpdate', 'getRoomByID', 'roomRemove']),
+    ...mapActions('rooms', ['roomUpdate', 'getRoomByID', 'roomRemove', 'uploadRoomImage', 'removeRoomFiles']),
     ...mapActions('utils', ['toast', 'confirm']),
     // Míos
     /**
@@ -110,11 +147,20 @@ export default {
      */
     async updateRoom() {
       this.isLoading = true;
+      // Si hay una imagen
+      if (this.image) {
+        this.imageURL = await this.uploadRoomImage({
+          file: this.image,
+          roomID: this.id,
+        });
+      }
+
       try {
         await this.roomUpdate({
           roomID: this.id,
           name: this.room.name,
           description: this.room.description,
+          image: this.imageURL,
         });
         this.toast({ message: 'Room data updated', type: 'is-success' });
         this.redirect();
@@ -139,6 +185,9 @@ export default {
           type: 'is-danger',
         });
         if (res) {
+          // Borramos las imagenes contenidas
+          await this.removeRoomFiles(this.id);
+          // Borramos los datos de la sala y sus mensajes
           await this.roomRemove(this.id);
           this.toast({ message: 'Room removed', type: 'is-success' });
           this.redirect();
@@ -164,6 +213,21 @@ export default {
     checkData() {
       return this.room.name.name.length > 3 && this.room.name.description.length > 3;
     },
+
+    /**
+     * Detecta cambios a la subida del fichero
+     */
+    onFileChange() {
+      this.imageURL = URL.createObjectURL(this.image);
+    },
+
+    removeImage() {
+      this.image = null;
+      // si queremos eliminar cualquier imagen
+      this.imageURL = null;
+      // Si queremos volver a la imagen anterior
+      // this.imageURL = this.room.image;
+    },
   },
 
   computed: {
@@ -174,9 +238,27 @@ export default {
     hasDataChanged() {
       return this.room.name.length >= 3 && this.room.description.length >= 3;
     },
+    /**
+     * Si hay imagen, creamos una URL del objeto subido
+     * Si no obtenemos la imagen pro defecto
+     */
+    roomImage() {
+      return this.imageURL
+        ? this.imageURL
+        // eslint-disable-next-line global-require
+        : require('@/assets/img/chat-room.png');
+    },
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.room__image {
+  height: 20vmax;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid;
+  background-size: cover;
+  background-position: center;
+}
 </style>

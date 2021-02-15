@@ -6,14 +6,15 @@ export default {
    * @param {*} Objeto con los datos de nombre, descripción y usuario de la sala
    */
   async createRoom({
-    name, description, uid, displayName,
+    name, description, image, roomID, uid, displayName,
   }) {
-    return Service.roomsCollection.add({
+    return Service.roomsCollection.doc(roomID).set({
       name,
       description,
       createdAt: Date.now(),
       adminUid: uid,
       adminName: displayName,
+      image,
     });
   },
 
@@ -29,11 +30,22 @@ export default {
    * Actualiza los datos de una sala
    * @param {room} room data
    */
-  async updateRoom({ roomID, name, description }) {
+  async updateRoom({
+    roomID, name, description, image,
+  }) {
     const roomData = {};
     if (name) roomData.name = name;
     if (description) roomData.description = description;
+    roomData.image = image;
     return Service.roomsCollection.doc(roomID).update(roomData);
+  },
+
+  /**
+   * Devuelve el id nuevo
+   */
+  async getNewId() {
+    const room = await Service.roomsCollection.doc();
+    return room.id;
   },
 
 };
