@@ -1,7 +1,7 @@
 <template>
    <footer class="footer">
         <div class="has-text-centered is-size-7-mobile">
-            <p class="copyright">Coding with <b-icon
+            <p class="copyright">Hola Coding with <b-icon
                   icon="heart-multiple"
                   size="is-small"
                   class="has-text-danger">
